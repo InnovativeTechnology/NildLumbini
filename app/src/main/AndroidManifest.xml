@@ -17,6 +17,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserProfileActivity"/>
+        <activity android:name=".DiaLog_Add"
+            android:theme="@style/Theme.AppCompat.Dialog"
+
+            >
+
+        </activity>
 
     </application>
 

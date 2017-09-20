@@ -31,6 +31,12 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
+        userProfileAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserProfileActivity.this,DiaLog_Add.class));
+            }
+        });
 
 
     }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "506875139617",
+    "firebase_url": "https://nildlumbini.firebaseio.com",
+    "project_id": "nildlumbini",
+    "storage_bucket": "nildlumbini.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506875139617:android:dde1efc6928365ab",
+        "android_client_info": {
+          "package_name": "smadhu.example.com.nildlumbini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506875139617-r7vcsef9m8urld6h8v9f9cjn0nvf1uav.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "smadhu.example.com.nildlumbini",
+            "certificate_hash": "0d71457e3b84a300ef081aa7e3297c9961f09c9f"
+          }
+        },
+        {
+          "client_id": "506875139617-enu8ld0c14hk0pkvpefq76bk5pi1gj36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgHoUlA4Zujdaujvv2gVs6OckwRcV7SLQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506875139617-enu8ld0c14hk0pkvpefq76bk5pi1gj36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

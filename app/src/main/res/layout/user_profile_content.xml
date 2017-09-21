@@ -117,7 +117,7 @@
                 android:id="@+id/user_profile_add_button"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:text="Add New File" />
+                android:text="New +" />
 
 
             <android.support.v7.widget.RecyclerView

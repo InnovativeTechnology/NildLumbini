@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">NildLumbini</string>
-<<<<<<< HEAD
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
-=======
-    <string name="btn_login">LOGIN</string>
-
->>>>>>> 502e3d35eac84a072e1157e5b027d83919ea6d05
 </resources>

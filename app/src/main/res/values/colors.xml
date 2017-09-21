@@ -3,20 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-<<<<<<< HEAD
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#757575</color>
-=======
-    <color name="back">#00b2cb</color>
-    <color name="colorWhite">#ffffff</color>
-    <color name="white">#ffffff</color>
-    <color name="input_login">#222222</color>
-    <color name="input_login_hint">#999999</color>
-    <color name="bg_login">#26ae90</color>
-    <color name="input_register">#888888</color>
-    <color name="colorSecondaryText">#cccccc</color>
-    <color name="colorIcons">#01b822</color>
-
->>>>>>> 502e3d35eac84a072e1157e5b027d83919ea6d05
 
 </resources>

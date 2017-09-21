@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:506875139617:android:60ff8f90cb66cc73",
+        "mobilesdk_app_id": "1:506875139617:android:dde1efc6928365ab",
         "android_client_info": {
-          "package_name": "ourproject.nildlumbini"
+          "package_name": "smadhu.example.com.nildlumbini"
         }
       },
       "oauth_client": [
         {
-          "client_id": "506875139617-7epsnnm9ppqfss856jmgt43a3ng4dpfs.apps.googleusercontent.com",
+          "client_id": "506875139617-r7vcsef9m8urld6h8v9f9cjn0nvf1uav.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "ourproject.nildlumbini",
+            "package_name": "smadhu.example.com.nildlumbini",
             "certificate_hash": "0d71457e3b84a300ef081aa7e3297c9961f09c9f"
           }
         },

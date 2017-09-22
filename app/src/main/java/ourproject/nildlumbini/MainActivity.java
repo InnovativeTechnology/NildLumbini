@@ -1,6 +1,5 @@
 package ourproject.nildlumbini;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;

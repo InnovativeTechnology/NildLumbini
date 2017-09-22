@@ -2,12 +2,10 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    tools:context="ourproject.nildlumbini.MainActivity"
-    >
+    android:layout_width="match_parent">
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/cooo"
         android:layout_width="match_parent"
@@ -34,25 +32,78 @@
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/myRecycler"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                class="android.support.v7.widget.RecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="4dp">
-            </android.support.v7.widget.RecyclerView>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:id="@+id/frameMain"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_height="match_parent">
-
-
-        </FrameLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+            <!-- <ImageView
+                 android:layout_width="187dp"
+                 android:layout_height="187dp"
+                 android:contentDescription="@string/app_name"
+                 android:layout_gravity="center"
+                 android:src="@drawable/unnamed" />-->
+
+            <TextView
+                android:id="@+id/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Nild Lumbini"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginTop="34.40dp"
+                android:layout_marginBottom="16.80dp"
+                android:textSize="50.60dp" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34.40dp"
+                android:background="@color/white"
+                android:inputType="textEmailAddress"
+                android:padding="16.80dp"
+                android:hint="Email"
+                android:textColor="@color/input_register"
+                android:textColorHint="@color/colorSecondaryText" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19.20dp"
+                android:background="@color/white"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="16.80dp"
+                android:textColor="@color/input_register"
+                android:textColorHint="@color/colorSecondaryText" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34.40dp"
+                android:padding="20.40dp"
+                android:background="@color/colorIcons"
+                android:elevation="4dp"
+                android:text="@string/btn_login"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

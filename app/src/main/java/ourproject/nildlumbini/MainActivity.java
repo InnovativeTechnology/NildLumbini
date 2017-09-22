@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -70,18 +72,8 @@ public class MainActivity extends AppCompatActivity {
         };
         viewPager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                item.setChecked(true);
-                drawerLayout.closeDrawers();
-                if (item.getItemId() == R.id.user_profile) {
-                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(i);
-                }
-                return true;
-            }
-        });
+        initNavigationView();
+        bindData();
 
        // setFragment(new dataFragment());
     }
@@ -131,18 +123,37 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
                 break;
-           // case R.id.logout1:
-
-             //   break;
+           case R.id.logout1:
+           {
+               Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
+           }
+               break;
 
             default:
                 break;
         }
 
         }
+    private void bindData() {
+
+
+        bindMenu();
+
+    }
+
+    // This function will change the menu based on the user is logged in or not.
+    public void bindMenu() {
+        if (firebaseAuth.getCurrentUser()!=null) {
+            navigationView.getMenu().setGroupVisible(R.id.group_after_login, true);
+            navigationView.getMenu().setGroupVisible(R.id.group_before_login, false);
+        } else {
+            navigationView.getMenu().setGroupVisible(R.id.group_before_login, true);
+            navigationView.getMenu().setGroupVisible(R.id.group_after_login, false);
+        }
+    }
 
 
     }
 
-//            navigationView.getMenu().setGroupVisible(R.id.group_after_login, true);
+
 

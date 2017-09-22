@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firebaseAuth=FirebaseAuth.getInstance();
         toolbar = (Toolbar) findViewById(R.id.toolbarFirst);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         setSupportActionBar(toolbar);
@@ -84,4 +86,63 @@ public class MainActivity extends AppCompatActivity {
        // setFragment(new dataFragment());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+      /*  if(firebaseAuth.getCurrentUser()!=null)
+        getMenuInflater().inflate(R.menu.menu_register,menu);
+        else
+            getMenuInflater().inflate(R.menu.menu,menu);*/
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+    private void initNavigationView() {
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        if (navigationView != null) {
+
+            navigationView.setNavigationItemSelectedListener(
+                    new NavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                            navigationMenuChanged(menuItem);
+                            return true;
+                        }
+                    });
+        }
+    }
+
+    private void navigationMenuChanged(MenuItem menuItem) {
+         openFragment(menuItem.getItemId());
+            menuItem.setChecked(true);
+            drawerLayout.closeDrawers();
+
+    }
+    public void openFragment(int menuId) {
+
+        switch (menuId) {
+            case R.id.user_profile:
+            case R.id.user_profile1: {
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+                break;
+           // case R.id.logout1:
+
+             //   break;
+
+            default:
+                break;
+        }
+
+        }
+
+
+    }
+
+//            navigationView.getMenu().setGroupVisible(R.id.group_after_login, true);
+

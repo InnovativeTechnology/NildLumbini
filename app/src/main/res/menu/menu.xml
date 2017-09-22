@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/user_profile"
-            android:checked="true"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:title=" User Profile "
-            />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:checkableBehavior="single" android:id="@+id/group_before_login">
+        <item
+            android:id="@+id/user_profile"
+            android:checked="true"
+            android:title="home" />
     </group>
+
+    <group android:checkableBehavior="single" android:id="@+id/group_after_login" android:visible="false">
+        <item
+            android:id="@+id/user_profile1"
+            android:checked="true"
+            android:title="home" />
+
+        <item
+            android:id="@+id/logout1"
+            android:title="Log Out" />
+    </group>
+
+
 
 </menu>

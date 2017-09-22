@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 if (item.getItemId() == R.id.user_profile) {
-                    Intent i = new Intent(MainActivity.this, UserProfileActivity.class);
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
 
@@ -59,49 +59,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        email = (EditText) findViewById(R.id.email);
-        pass = (EditText) findViewById(R.id.password);
-        firebaseAuth = FirebaseAuth.getInstance();
-        login = (Button) findViewById(R.id.btnLogin);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logIn();
-
-            }
-        });
     }
 
-    private void logIn() {
-
-        boolean isValid = true;
-
-        if (email.getText().toString().trim().length() < 6 || !StaticClassUtils.isEmailFormatValid(email.getText().toString())) {
-            email.setError("Enter valid user name");
-            isValid = false;
-        }
-        if (pass.getText().toString().trim().length() < 6) {
-            pass.setError("Minimum 6 characters required");
-            isValid = false;
-        }
-
-        if (isValid) {
-            final ProgressDialog p = ProgressDialog.show(MainActivity.this, "Wait for a minute", "Waiting", true);
-            firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            p.dismiss();
-
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "login sucessful", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "login  is not  sucessful", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    });
-        }
-    }
 }

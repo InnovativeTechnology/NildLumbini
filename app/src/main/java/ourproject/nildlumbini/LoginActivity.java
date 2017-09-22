@@ -77,7 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
                                 startActivity(intent);
-                                finish();                            } else {
+                                finish();                            }
+                            else {
                                 Toast.makeText(getApplicationContext(), "login  is not  sucessful", Toast.LENGTH_SHORT).show();
                             }
 

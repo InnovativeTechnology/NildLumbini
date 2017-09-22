@@ -30,7 +30,8 @@ public class DiaLog_Add extends AppCompatActivity {
 
 try {
     title = (EditText) findViewById(R.id.title1);
-}catch (Exception e)
+}
+catch (Exception e)
 {
     e.printStackTrace();
 }

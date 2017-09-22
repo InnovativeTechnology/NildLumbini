@@ -5,8 +5,7 @@
         <item android:id="@+id/user_profile"
             android:checked="true"
             android:icon="@drawable/ic_person_black_24dp"
-            android:title=" User Profile "
-            />
+            android:title=" User Profile " />
 
     </group>
 

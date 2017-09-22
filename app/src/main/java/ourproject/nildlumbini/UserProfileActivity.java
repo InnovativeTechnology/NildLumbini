@@ -76,6 +76,8 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 mauth.signOut();
+                startActivity(new Intent(UserProfileActivity.this,MainActivity.class));
+                finish();
             }
         });
         alertbox.setNegativeButton("No", new DialogInterface.OnClickListener() {

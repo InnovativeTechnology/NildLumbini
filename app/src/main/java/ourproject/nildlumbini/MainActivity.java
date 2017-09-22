@@ -16,24 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.app.ProgressDialog;
-import android.support.annotation.NonNull;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    EditText email, pass;
-    Button login;
+
     private FirebaseAuth firebaseAuth;
 
     NavigationView navigationView;
@@ -79,52 +68,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        email = (EditText) findViewById(R.id.email);
-        pass = (EditText) findViewById(R.id.password);
-        firebaseAuth = FirebaseAuth.getInstance();
-        login = (Button) findViewById(R.id.btnLogin);
        // setFragment(new dataFragment());
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logIn();
-
-            }
-        });
     }
 
-    private void logIn() {
-
-        boolean isValid = true;
-
-        if (email.getText().toString().trim().length() < 6 || !StaticClassUtils.isEmailFormatValid(email.getText().toString())) {
-            email.setError("Enter valid user name");
-            isValid = false;
-        }
-        if (pass.getText().toString().trim().length() < 6) {
-            pass.setError("Minimum 6 characters required");
-            isValid = false;
-        }
-
-        if (isValid) {
-            final ProgressDialog p = ProgressDialog.show(MainActivity.this, "Wait for a minute", "Waiting", true);
-            firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            p.dismiss();
-
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "login sucessful", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "login  is not  sucessful", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    });
-        }
-    }
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

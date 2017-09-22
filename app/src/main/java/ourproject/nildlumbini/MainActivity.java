@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
+    FragmentPagerAdapter mPagerAdapter;
     ViewPager viewPager;
+    TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         setSupportActionBar(toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        tabLayout= (TabLayout) findViewById(R.id.tabs);
 
         getSupportActionBar().setTitle("");
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,15 +48,25 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         viewPager = (ViewPager) findViewById(R.id.pager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mPagerAdapter= new FragmentPagerAdapter(getSupportFragmentManager()) {
+            private final Fragment[]  fragments= new Fragment[]{new FragmentOne(),new FragmentTwo(),new FragmentThree(),new FragmentFour(),new FragmentFive(),new FragmentSix()};
+            private  final String title[]= new String[]{"one","two","three","four","five","six"};
+            @Override
+            public Fragment getItem(int position) {
+                return fragments[position];
+            }
 
-        // Add Fragments to adapter one by one
-        adapter.addFragment(new FragmentOne(), "FRAG1");
-        adapter.addFragment(new FragmentTwo(), "FRAG2");
-       // adapter.addFragment(new FragmentThree(), "FRAG3");
-        viewPager.setAdapter(adapter);
+            @Override
+            public int getCount() {
+                return fragments.length;
+            }
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return title[position];
+            }
+        };
+        viewPager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -71,32 +85,4 @@ public class MainActivity extends AppCompatActivity {
        // setFragment(new dataFragment());
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
     }

@@ -2,7 +2,6 @@
     <string name="app_name">NildLumbini</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
-
     <string name="btn_login">LOGIN</string>
 
 </resources>

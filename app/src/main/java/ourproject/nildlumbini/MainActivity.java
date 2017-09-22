@@ -1,7 +1,5 @@
 package ourproject.nildlumbini;
 
-import android.content.Intent;
-import android.net.Uri;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -24,7 +22,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
     EditText email, pass;
     Button login;
     private FirebaseAuth firebaseAuth;
@@ -37,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar= (Toolbar) findViewById(R.id.toolbarFirst);
-        navigationView= (NavigationView) findViewById(R.id.navigation_view);
         toolbar = (Toolbar) findViewById(R.id.toolbarFirst);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         setSupportActionBar(toolbar);

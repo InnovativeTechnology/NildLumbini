@@ -39,3 +39,4 @@ dependencies {
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'

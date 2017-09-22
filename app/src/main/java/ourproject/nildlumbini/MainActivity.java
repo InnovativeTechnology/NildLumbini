@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 if (item.getItemId() == R.id.user_profile) {
-                    Intent i = new Intent(MainActivity.this, UserProfileActivity.class);
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
 
@@ -99,4 +99,4 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-}
+    }

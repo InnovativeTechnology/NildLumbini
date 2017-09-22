@@ -16,14 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserProfileActivity"/>
-        <activity android:name=".DiaLog_Add"
-            android:theme="@style/Theme.AppCompat.Dialog"
-
-            >
-
-        </activity>
-
+        <activity android:name=".UserProfileActivity" />
+        <activity
+            android:name=".DiaLog_Add"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

@@ -2,12 +2,10 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    tools:context="ourproject.nildlumbini.MainActivity"
-    >
+    android:layout_width="match_parent">
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/cooo"
         android:layout_width="match_parent"
@@ -34,22 +32,6 @@
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/myRecycler"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                class="android.support.v7.widget.RecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="4dp">
-            </android.support.v7.widget.RecyclerView>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:id="@+id/frameMain"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_height="match_parent">
-
-
-        </FrameLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

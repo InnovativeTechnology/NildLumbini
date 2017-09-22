@@ -39,18 +39,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        firebaseAuth=FirebaseAuth.getInstance();
-        toolbar = (Toolbar) findViewById(R.id.toolbarFirst);
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        setSupportActionBar(toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        tabLayout= (TabLayout) findViewById(R.id.tabs);
 
-        getSupportActionBar().setTitle("");
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+        initUtils();
+        initUI();
+        initNavigationView();
+        bindData();
+
+    }
+
+    private void initUtils() {
+        firebaseAuth=FirebaseAuth.getInstance();
+    }
+
+    private void initUI(){
+        initToolbar();
+        initDrawerLayout();
+        initNavigationView();
+        tabLayout= (TabLayout) findViewById(R.id.tabs);
+        initPager();
+
+    }
+
+    private void initPager() {
         viewPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter= new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[]  fragments= new Fragment[]{new FragmentOne(),new FragmentTwo(),new FragmentThree(),new FragmentFour(),new FragmentFive(),new FragmentSix()};
@@ -72,18 +82,26 @@ public class MainActivity extends AppCompatActivity {
         };
         viewPager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        initNavigationView();
-        bindData();
 
-       // setFragment(new dataFragment());
+    }
+
+    private void initDrawerLayout() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbarFirst);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-      /*  if(firebaseAuth.getCurrentUser()!=null)
-        getMenuInflater().inflate(R.menu.menu_register,menu);
-        else
-            getMenuInflater().inflate(R.menu.menu,menu);*/
         return true;
     }
 

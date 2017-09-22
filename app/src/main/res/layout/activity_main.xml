@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent">
-
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/cooo"
         android:layout_width="match_parent"
@@ -30,11 +29,32 @@
                     layout="@layout/tool">
                 </include>
             </android.support.design.widget.CollapsingToolbarLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:fadeScrollbars="true"
+                android:scrollbarSize="10dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="scrollable"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:tabGravity="fill"
+                app:tabTextColor="#FFF"
+                app:tabSelectedTextColor="@color/colorAccent"
+                />
         </android.support.design.widget.AppBarLayout>
 
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_marginTop="106dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

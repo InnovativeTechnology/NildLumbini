@@ -12,8 +12,8 @@
         <item
             android:id="@+id/user_profile1"
             android:checked="true"
-            android:title="home" />
-
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title=" User Profile " />
         <item
             android:id="@+id/logout1"
             android:title="Log Out" />

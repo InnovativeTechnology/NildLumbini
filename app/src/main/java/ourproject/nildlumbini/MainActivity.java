@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import ourproject.nildlumbini.fragments.FragmentFive;
 import ourproject.nildlumbini.fragments.FragmentFour;
@@ -20,9 +21,19 @@ import ourproject.nildlumbini.fragments.FragmentSix;
 import ourproject.nildlumbini.fragments.FragmentThree;
 import ourproject.nildlumbini.fragments.FragmentTwo;
 
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+
 public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
+    FirebaseAuth firebaseAuth;
     DrawerLayout drawerLayout;
     FragmentPagerAdapter mPagerAdapter;
     ViewPager viewPager;
@@ -31,17 +42,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbarFirst);
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        setSupportActionBar(toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        tabLayout= (TabLayout) findViewById(R.id.tabs);
 
-        getSupportActionBar().setTitle("");
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+        initUtils();
+        initUI();
+        initNavigationView();
+        bindData();
+
+    }
+
+    private void initUtils() {
+        firebaseAuth=FirebaseAuth.getInstance();
+    }
+
+    private void initUI(){
+        initToolbar();
+        initDrawerLayout();
+        initNavigationView();
+        tabLayout= (TabLayout) findViewById(R.id.tabs);
+        initPager();
+
+    }
+
+    private void initPager() {
         viewPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter= new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[]  fragments= new Fragment[]{new FragmentOne(),new FragmentTwo(),new FragmentThree(),new FragmentFour(),new FragmentFive(),new FragmentSix()};
@@ -63,19 +85,99 @@ public class MainActivity extends AppCompatActivity {
         };
         viewPager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                item.setChecked(true);
-                drawerLayout.closeDrawers();
-                if (item.getItemId() == R.id.user_profile) {
-                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(i);
-                }
 
-                return true;
+    }
+
+    private void initDrawerLayout() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbarFirst);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+    private void initNavigationView() {
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        if (navigationView != null) {
+
+            navigationView.setNavigationItemSelectedListener(
+                    new NavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                            navigationMenuChanged(menuItem);
+                            return true;
+                        }
+                    });
+        }
+    }
+
+    private void navigationMenuChanged(MenuItem menuItem) {
+         openFragment(menuItem.getItemId());
+            menuItem.setChecked(true);
+            drawerLayout.closeDrawers();
+
+    }
+    public void openFragment(int menuId) {
+
+        switch (menuId) {
+            case R.id.user_profile:
+            case R.id.user_profile1: {
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
             }
-        });
-    }
+
+                break;
+           case R.id.logout1:
+           {
+               Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
+           }
+               break;
+
+            default:
+                break;
+        }
+
+        }
+    private void bindData() {
+
+
+        bindMenu();
+
 
     }
+
+    // This function will change the menu based on the user is logged in or not.
+    public void bindMenu() {
+        if (firebaseAuth.getCurrentUser()!=null) {
+            navigationView.getMenu().setGroupVisible(R.id.group_after_login, true);
+            navigationView.getMenu().setGroupVisible(R.id.group_before_login, false);
+        } else {
+            navigationView.getMenu().setGroupVisible(R.id.group_before_login, true);
+            navigationView.getMenu().setGroupVisible(R.id.group_after_login, false);
+        }
+    }
+
+
+    }
+
+
+
+

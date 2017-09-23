@@ -18,15 +18,13 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserProfileActivity extends AppCompatActivity {
 
     Button userProfileAddButton;
     RecyclerView userProfileRecycler;
     FirebaseAuth mauth;
     Toolbar toolbar;
+    //AlertDialogManage alt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +61,15 @@ public class UserProfileActivity extends AppCompatActivity {
        int id = item.getItemId();
         if (id == R.id.user_logout) {
             AlertDialogManage();
+         //   alt.AlertManage();
+
         }
         return true;
     }
 
-    private void AlertDialogManage() {
+
+
+   private void AlertDialogManage() {
         AlertDialog.Builder alertbox = new AlertDialog.Builder(UserProfileActivity.this);
         alertbox.setTitle("Are you sure want to logout??");
         alertbox.setCancelable(false);

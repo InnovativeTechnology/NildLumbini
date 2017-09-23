@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.btnLogin);
 
-        try {
+       try {
             mauth = FirebaseAuth.getInstance();
             mUser = FirebaseAuth.getInstance().getCurrentUser();
         }
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-        if(mUser!=null)
+       if(mUser!=null)
         {
             Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
             startActivity(intent);
@@ -77,7 +77,10 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
                                 startActivity(intent);
-                                finish();                            } else {
+                                finish();
+                            }
+                            else
+                            {
                                 Toast.makeText(getApplicationContext(), "login  is not  sucessful", Toast.LENGTH_SHORT).show();
                             }
 

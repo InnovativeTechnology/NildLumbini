@@ -1,4 +1,4 @@
-package ourproject.nildlumbini;
+package ourproject.nildlumbini.fragments;
 
 
 import android.os.Bundle;
@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ourproject.nildlumbini.R;
+
 /**
  * Created by smadhu on 9/22/2017.
  */
 
-public class FragmentOne extends Fragment {
-    public FragmentOne() {
+public class FragmentThree extends Fragment {
+    public FragmentThree() {
         // Required empty public constructor
     }
 
@@ -25,7 +27,7 @@ public class FragmentOne extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_one, container, false);
+        return inflater.inflate(R.layout.fragment_two, container, false);
     }
 
 }

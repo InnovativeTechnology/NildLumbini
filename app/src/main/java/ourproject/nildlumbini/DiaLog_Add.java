@@ -19,7 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -41,7 +43,8 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     DatabaseReference firebaseDatabase;
-
+    DatabaseReference firebaseDatabase1;
+    String  Timestamp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,10 @@ public class DiaLog_Add extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line,opt);
         option.setAdapter(adapter);
-        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile");
+      Timestamp= ExtractDateTime.getDate();
+
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"");
+        firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
 
         sReference = FirebaseStorage.getInstance().getReference();
 
@@ -77,8 +83,8 @@ catch (Exception e)
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-                   String  Timestamp = ExtractDateTime.getDate();
                     DatabaseReference newPost = firebaseDatabase.push();
+                    DatabaseReference newPost1 = firebaseDatabase1;
 
                     newPost.child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     newPost.child("option").setValue(option.getSelectedItem().toString());
@@ -86,6 +92,15 @@ catch (Exception e)
                     newPost.child("article").setValue(article.getText().toString());
                     newPost.child("imgUrl").setValue(downloadUri.toString());
                     newPost.child("Date").setValue(Timestamp);
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    map.put("option",option.getSelectedItem().toString());
+                    map.put("title",title.getText().toString());
+                    map.put("article",article.getText().toString());
+                    map.put("imgUrl",downloadUri.toString());
+                    map.put("Date",Timestamp);
+                      newPost1.push().setValue(map);
+
                     progressDialog.dismiss();
                     startActivity(new Intent(DiaLog_Add.this,MainActivity.class));
                     finish();

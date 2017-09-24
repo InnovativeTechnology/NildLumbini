@@ -1,6 +1,4 @@
 package ourproject.nildlumbini;
-
-
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -28,8 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-
 public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
@@ -174,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
             navigationView.getMenu().setGroupVisible(R.id.group_after_login, false);
         }
     }
-
-
     }
 
 

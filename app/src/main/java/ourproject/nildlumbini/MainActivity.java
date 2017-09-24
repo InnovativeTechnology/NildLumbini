@@ -12,20 +12,24 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import ourproject.nildlumbini.fragments.FragmentFive;
-import ourproject.nildlumbini.fragments.FragmentFour;
-import ourproject.nildlumbini.fragments.FragmentOne;
-import ourproject.nildlumbini.fragments.FragmentSix;
-import ourproject.nildlumbini.fragments.FragmentThree;
-import ourproject.nildlumbini.fragments.FragmentTwo;
 
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import ourproject.nildlumbini.Fragment.FragmentFive;
+import ourproject.nildlumbini.Fragment.FragmentFour;
+import ourproject.nildlumbini.Fragment.FragmentOne;
+import ourproject.nildlumbini.Fragment.FragmentSix;
+import ourproject.nildlumbini.Fragment.FragmentThree;
+import ourproject.nildlumbini.Fragment.FragmentTwo;
+
+
 public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;

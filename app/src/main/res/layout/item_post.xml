@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:layout_height="150dp"
+<android.support.v7.widget.CardView android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="1dp"
     app:cardCornerRadius="@dimen/action_button_content_margin"
@@ -77,13 +77,19 @@
                 android:gravity="center"
                 android:text="Title"/>
         </LinearLayout>
-        <Button
+        <TextView
             android:layout_below="@+id/l4"
             android:text="blah blah blah blah blah blah blah blah blah blah blah blah"
             android:layout_width="match_parent"
             android:id="@+id/article"
             android:clickable="false"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/image"
+            android:layout_below="@+id/article"
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
 

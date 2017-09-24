@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="option"><item>hello</item>
-        <item>hello</item>
-        <item>hello</item>
+    <string-array name="option">
+        <item>Motivation</item>
+        <item>Friends</item>
+        <item>BirthDay</item>
+        <item>Love</item>
     </string-array>
 </resources>

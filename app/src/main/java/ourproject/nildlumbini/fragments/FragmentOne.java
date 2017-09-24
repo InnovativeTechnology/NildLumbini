@@ -42,17 +42,6 @@ public class FragmentOne extends Fragment {
         myRecyle.setItemAnimator(new DefaultItemAnimator());
 
         arrayList= new ArrayList<>();
-        RetrieveData r1= new RetrieveData("Name1","option1","title1","hahah","blah blah blah blah blah blah blah blah blah blah blah blah");
-        RetrieveData r2= new RetrieveData("Name1","option1","title1","hahah","blah blah blah blah blah blah blah blah blah blah blah blah");
-        RetrieveData r3= new RetrieveData("Name1","option1","title1","hahah","blah blah blah blah blah blah blah blah blah blah blah blah");
-        RetrieveData r4= new RetrieveData("Name1","option1","title1","hahah","blah blah blah blah blah blah blah blah blah blah blah blah");
-        RetrieveData r5= new RetrieveData("Name1","option1","title1","hahah","blah blah blah blah blah blah blah blah blah blah blah blah");
-        arrayList.add(r1);
-        arrayList.add(r2);
-        arrayList.add(r3);
-        arrayList.add(r4);
-        arrayList.add(r5);
-        myRecyle.setAdapter(new Item_Adap(arrayList,getActivity()));
 
         return view;
     }

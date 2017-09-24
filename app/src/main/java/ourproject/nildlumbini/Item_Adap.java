@@ -8,10 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +46,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 {
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
-    Item_Adap(List<RetrieveData> retrieves, Context context)
+    public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;
         this.context =context;
@@ -60,6 +64,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         holder.date.setText(retrieve1.date);
         holder.title.setText(retrieve1.title);
         holder.article.setText(retrieve1.article);
+        Picasso.with(context).load(retrieve1.imgUrl).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
 
     }
 
@@ -69,14 +74,17 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     }
     public static class ViewHolder extends  RecyclerView.ViewHolder {
         TextView name,option,date,title;
-        Button article ;
+        TextView article ;
+        ImageView img;
         public ViewHolder(View itemView) {
             super(itemView);
-            article= (Button) itemView.findViewById(R.id.article);
+
+            article= (TextView) itemView.findViewById(R.id.article);
             name= (TextView) itemView.findViewById(R.id.name);
             option= (TextView) itemView.findViewById(R.id.option);
             date= (TextView) itemView.findViewById(R.id.date);
             title= itemView.findViewById(R.id.title);
+            img= itemView.findViewById(R.id.image);
 
         }
     }

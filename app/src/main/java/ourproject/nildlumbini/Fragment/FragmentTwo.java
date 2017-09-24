@@ -1,5 +1,4 @@
-package ourproject.nildlumbini;
-
+package ourproject.nildlumbini.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ourproject.nildlumbini.R;
+
 /**
  * Created by smadhu on 9/22/2017.
  */
 
-public class FragmentThree extends Fragment {
-    public FragmentThree() {
+public class FragmentTwo extends Fragment {
+    public FragmentTwo() {
         // Required empty public constructor
     }
 

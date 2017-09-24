@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#000000"
 
@@ -50,6 +51,16 @@
         android:minLines="5"
         android:layout_below="@+id/option"
         android:layout_height="wrap_content" />
+    <ImageButton
+        android:layout_width="match_parent"
+        app:srcCompat="@drawable/ic_person_black_24dp"
+        android:id="@+id/selectImage"
+        android:scaleType="centerCrop"
+        android:layout_below="@id/article"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="5dp"
+        android:layout_height="200dp" />
+
 
     <Button
         android:id="@+id/addButton"
@@ -60,7 +71,7 @@
         android:layout_marginRight="30dp"
         android:gravity="center"
         android:background="#e2e2e4"
-        android:layout_below="@+id/article"
+        android:layout_below="@+id/selectImage"
         android:layout_width="match_parent"
         android:layout_height="40dp" />
 

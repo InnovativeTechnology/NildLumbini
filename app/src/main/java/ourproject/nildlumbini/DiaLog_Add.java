@@ -43,7 +43,7 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     DatabaseReference firebaseDatabase;
-    DatabaseReference firebaseDatabase1;
+    //DatabaseReference firebaseDatabase1;
     String  Timestamp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +57,8 @@ public class DiaLog_Add extends AppCompatActivity {
         option.setAdapter(adapter);
       Timestamp= ExtractDateTime.getDate();
 
-        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"");
-        firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile")/*.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"")*/;
+       // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
 
         sReference = FirebaseStorage.getInstance().getReference();
 
@@ -84,7 +84,7 @@ catch (Exception e)
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
                     DatabaseReference newPost = firebaseDatabase.push();
-                    DatabaseReference newPost1 = firebaseDatabase1;
+                  //  DatabaseReference newPost1 = firebaseDatabase1;
 
                     newPost.child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     newPost.child("option").setValue(option.getSelectedItem().toString());
@@ -99,7 +99,9 @@ catch (Exception e)
                     map.put("article",article.getText().toString());
                     map.put("imgUrl",downloadUri.toString());
                     map.put("Date",Timestamp);
-                      newPost1.push().setValue(map);
+                    //  newPost1.push().setValue(map);
+
+
 
                     progressDialog.dismiss();
                     startActivity(new Intent(DiaLog_Add.this,MainActivity.class));

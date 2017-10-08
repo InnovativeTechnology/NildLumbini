@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        database.keepSynced(true);
         initUtils();
         initUI();
         initNavigationView();
@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                    {
                        if(t == true) {
                            myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
+
                        }
                    }
                 }

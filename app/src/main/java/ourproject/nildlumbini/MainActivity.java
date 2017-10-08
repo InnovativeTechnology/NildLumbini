@@ -55,37 +55,8 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initDrawerLayout();
         initNavigationView();
-/*
-        tabLayout= (TabLayout) findViewById(R.id.tabs);
-        initPager();
-*/
-
     }
 
-    private void initPager() {
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter= new FragmentPagerAdapter(getSupportFragmentManager()) {
-            private final Fragment[]  fragments= new Fragment[]{new FragmentOne(),new FragmentTwo(),new FragmentThree(),new FragmentFour(),new FragmentFive(),new FragmentSix()};
-            private  final String title[]= new String[]{"one","two","three","four","five","six"};
-            @Override
-            public Fragment getItem(int position) {
-                return fragments[position];
-            }
-
-            @Override
-            public int getCount() {
-                return fragments.length;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return title[position];
-            }
-        };
-        viewPager.setAdapter(mPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-
-    }
 
     private void initDrawerLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

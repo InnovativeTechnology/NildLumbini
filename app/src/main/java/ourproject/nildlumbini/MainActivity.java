@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.check:
+            case R.id.check1:
                 startActivity(new Intent(MainActivity.this,MainActivityCheck.class));
                 break;
            case R.id.logout1:
@@ -165,12 +166,14 @@ public class MainActivity extends AppCompatActivity {
                    }catch (Exception e)
                    {
                        if(t == true) {
+                           new MyList(doclist);
                            myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
 
                        }
                    }
                 }
                 if(t == true) {
+                    new MyList(doclist);
                     myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
                 }
                 Log.d("TAG","SIZE"+doclist.size());

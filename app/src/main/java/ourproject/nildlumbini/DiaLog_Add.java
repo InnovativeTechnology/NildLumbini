@@ -44,7 +44,10 @@ public class DiaLog_Add extends AppCompatActivity {
 
     DatabaseReference firebaseDatabase;
     DatabaseReference firebaseDatabase1;
+    DatabaseReference firebaseDatabase2;
     String  Timestamp;
+
+    Uri downloadUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class DiaLog_Add extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"");
         firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
-
+        firebaseDatabase2 = FirebaseDatabase.getInstance().getReference().child("AccPost");
         sReference = FirebaseStorage.getInstance().getReference();
 
 try {
@@ -78,11 +81,12 @@ catch (Exception e)
                 progressDialog.setTitle("uploading..");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
+
                 StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
                 filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUri = taskSnapshot.getDownloadUrl();
+                    downloadUri = taskSnapshot.getDownloadUrl();
                     DatabaseReference newPost = firebaseDatabase.push();
                     DatabaseReference newPost1 = firebaseDatabase1;
 
@@ -92,6 +96,7 @@ catch (Exception e)
                     newPost.child("article").setValue(article.getText().toString());
                     newPost.child("imgUrl").setValue(downloadUri.toString());
                     newPost.child("Date").setValue(Timestamp);
+
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     map.put("option",option.getSelectedItem().toString());
@@ -99,7 +104,9 @@ catch (Exception e)
                     map.put("article",article.getText().toString());
                     map.put("imgUrl",downloadUri.toString());
                     map.put("Date",Timestamp);
-                      newPost1.push().setValue(map);
+                    newPost1.push().setValue(map);
+
+                    new AccToPost().post(option.getSelectedItem().toString());
 
                     progressDialog.dismiss();
                     startActivity(new Intent(DiaLog_Add.this,MainActivity.class));
@@ -137,6 +144,24 @@ catch (Exception e)
                 mselectImage.setImageURI(mImage);
             }
 
+        }
+
+
+    }
+    class AccToPost{
+        public AccToPost() {
+        }
+        public void post(String postType){
+            DatabaseReference newPost1 = firebaseDatabase2.child(postType);
+
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            map.put("option",option.getSelectedItem().toString());
+            map.put("title",title.getText().toString());
+            map.put("article",article.getText().toString());
+            map.put("imgUrl",downloadUri.toString());
+            map.put("Date",Timestamp);
+            newPost1.push().setValue(map);
         }
     }
 }

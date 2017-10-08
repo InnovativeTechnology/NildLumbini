@@ -88,6 +88,7 @@
             android:layout_width="match_parent"
             android:id="@+id/article"
             android:clickable="false"
+            android:ellipsize="marquee"
             android:layout_height="wrap_content" />
 
 

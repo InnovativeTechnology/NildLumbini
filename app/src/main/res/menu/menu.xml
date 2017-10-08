@@ -6,6 +6,9 @@
             android:id="@+id/user_profile"
             android:checked="true"
             android:title="home" />
+        <item android:id="@+id/check"
+            android:title="check"
+            />
     </group>
 
     <group android:checkableBehavior="single" android:id="@+id/group_after_login" android:visible="false">

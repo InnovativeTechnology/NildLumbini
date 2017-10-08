@@ -43,8 +43,12 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     DatabaseReference firebaseDatabase;
+<<<<<<< HEAD
     DatabaseReference firebaseDatabase1;
     DatabaseReference firebaseDatabase2;
+=======
+    //DatabaseReference firebaseDatabase1;
+>>>>>>> 605e9ddac37bb53a86a0c10206016d44a69940f6
     String  Timestamp;
 
     Uri downloadUri;
@@ -60,9 +64,15 @@ public class DiaLog_Add extends AppCompatActivity {
         option.setAdapter(adapter);
       Timestamp= ExtractDateTime.getDate();
 
+<<<<<<< HEAD
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"");
         firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
         firebaseDatabase2 = FirebaseDatabase.getInstance().getReference().child("AccPost");
+=======
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile")/*.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"")*/;
+       // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
+
+>>>>>>> 605e9ddac37bb53a86a0c10206016d44a69940f6
         sReference = FirebaseStorage.getInstance().getReference();
 
 try {
@@ -88,7 +98,7 @@ catch (Exception e)
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     downloadUri = taskSnapshot.getDownloadUrl();
                     DatabaseReference newPost = firebaseDatabase.push();
-                    DatabaseReference newPost1 = firebaseDatabase1;
+                  //  DatabaseReference newPost1 = firebaseDatabase1;
 
                     newPost.child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     newPost.child("option").setValue(option.getSelectedItem().toString());
@@ -104,9 +114,15 @@ catch (Exception e)
                     map.put("article",article.getText().toString());
                     map.put("imgUrl",downloadUri.toString());
                     map.put("Date",Timestamp);
+<<<<<<< HEAD
                     newPost1.push().setValue(map);
 
                     new AccToPost().post(option.getSelectedItem().toString());
+=======
+                    //  newPost1.push().setValue(map);
+
+
+>>>>>>> 605e9ddac37bb53a86a0c10206016d44a69940f6
 
                     progressDialog.dismiss();
                     startActivity(new Intent(DiaLog_Add.this,MainActivity.class));

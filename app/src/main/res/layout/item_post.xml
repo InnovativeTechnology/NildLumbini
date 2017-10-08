@@ -47,7 +47,7 @@
                 android:id="@+id/Date"
                 android:layout_gravity="right"
                 android:gravity="right"
-                android:text="on 15-Dec-2016"/>
+               />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -60,8 +60,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/date"
                 android:layout_gravity="right"
-                android:gravity="right"
-                android:text="on 15-Dec-2016"/>
+                android:gravity="right" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -77,18 +76,20 @@
                 android:gravity="center"
                 android:text="Title"/>
         </LinearLayout>
-        <TextView
+        <ImageView
             android:layout_below="@+id/l4"
+            android:layout_width="match_parent"
+            android:id="@+id/image"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@+id/image"
             android:text="blah blah blah blah blah blah blah blah blah blah blah blah"
             android:layout_width="match_parent"
             android:id="@+id/article"
             android:clickable="false"
+            android:ellipsize="marquee"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:layout_width="match_parent"
-            android:id="@+id/image"
-            android:layout_below="@+id/article"
-            android:layout_height="wrap_content" />
+
 
     </RelativeLayout>
 

@@ -11,12 +11,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import ourproject.nildlumbini.Fragment.FragmentFive;
 import ourproject.nildlumbini.Fragment.FragmentFour;
@@ -35,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter mPagerAdapter;
     ViewPager viewPager;
     TabLayout tabLayout;
+    RecyclerView myRecyle;
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initDrawerLayout();
         initNavigationView();
+        myRecyle= (RecyclerView) findViewById(R.id.r1);
+        RecyclerView.LayoutManager layoutManager=new GridLayoutManager(MainActivity.this,1);
+        myRecyle.setLayoutManager(layoutManager);
+        myRecyle.setItemAnimator(new DefaultItemAnimator());
+
     }
 
 
@@ -132,6 +152,44 @@ public class MainActivity extends AppCompatActivity {
 
 
         bindMenu();
+        database.child("UserFile").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean t = false;
+                //if(dataSnapshot.hasChild())
+                final ArrayList<RetrieveData> doclist= new ArrayList<>();
+                for(DataSnapshot note :dataSnapshot.getChildren())
+                {
+                   try {
+                       if (note.getChildrenCount() > 0) {
+                           String name = note.child("name").getValue().toString();
+                           String option = note.child("option").getValue().toString();
+                           String title = note.child("title").getValue().toString();
+                           String article = note.child("article").getValue().toString();
+                           String imgUrl = note.child("imgUrl").getValue().toString();
+                           String Date = note.child("Date").getValue().toString();
+                           doclist.add(new RetrieveData(name, option, title, article, imgUrl, Date));
+                           t = true;
+                       }
+                   }catch (Exception e)
+                   {
+                       if(t == true) {
+                           myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
+                       }
+                   }
+                }
+                if(t == true) {
+                    myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
+                }
+                Log.d("TAG","SIZE"+doclist.size());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("TAG",databaseError.toString());
+            }
+        });
+
 
     }
 

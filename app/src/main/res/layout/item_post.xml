@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="1dp"
-    app:cardCornerRadius="@dimen/action_button_content_margin"
+
     android:layout_margin="2dp"
     android:id="@+id/card"
     android:layout_width="match_parent"
@@ -87,6 +87,8 @@
             android:layout_width="match_parent"
             android:id="@+id/article"
             android:clickable="false"
+            android:maxLines="2"
+            android:lines="2"
             android:ellipsize="marquee"
             android:layout_height="wrap_content" />
 

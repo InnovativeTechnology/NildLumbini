@@ -140,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     private void bindData() {
-
-
         bindMenu();
         database.child("UserFile").addValueEventListener(new ValueEventListener() {
             @Override

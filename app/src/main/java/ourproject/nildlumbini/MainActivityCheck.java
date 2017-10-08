@@ -28,7 +28,6 @@ public class MainActivityCheck extends AppCompatActivity {
         tabLayout= (TabLayout) findViewById(R.id.tabs);
 
         initPager();
-        initToolbar();
     }
     private void initPager() {
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -52,12 +51,6 @@ public class MainActivityCheck extends AppCompatActivity {
         };
         viewPager.setAdapter(mPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
-    }
-    private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbarFirst);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
 
     }
 

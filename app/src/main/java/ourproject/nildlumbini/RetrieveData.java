@@ -9,12 +9,12 @@ import java.io.Serializable;
 public class RetrieveData implements Serializable {
     //
 
-    String name;
-    String option;
-    String title;
-    String date;
-    String article;
-    String imgUrl;
+   public String name;
+    public String option;
+    public String title;
+    public String date;
+    public String article;
+    public String imgUrl;
 
     public RetrieveData()
     {}

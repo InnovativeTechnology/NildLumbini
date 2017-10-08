@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class MyList {
-   static ArrayList<RetrieveData> doclist;
+    static ArrayList<RetrieveData> doclist;
     public MyList(ArrayList<RetrieveData> doclist )
     {
         this.doclist= doclist;

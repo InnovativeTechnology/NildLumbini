@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 
 import ourproject.nildlumbini.Fragment.FragmentFive;
 import ourproject.nildlumbini.Fragment.FragmentFour;
-import ourproject.nildlumbini.Fragment.FragmentSix;
 import ourproject.nildlumbini.Fragment.FragmentThree;
 import ourproject.nildlumbini.Fragment.FragmentTwo;
 
@@ -28,11 +27,12 @@ public class MainActivityCheck extends AppCompatActivity {
 
         initPager();
     }
+
     private void initPager() {
         viewPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter= new FragmentPagerAdapter(getSupportFragmentManager()) {
-            private final Fragment[]  fragments= new Fragment[]{new FragmentTwo(),new FragmentThree(),new FragmentFour(),new FragmentFive(),new FragmentSix()};
-            private  final String title[]= new String[]{"two","three","four","five","six"};
+            private final Fragment[]  fragments= new Fragment[]{new FragmentTwo(),new FragmentThree(),new FragmentFour(),new FragmentFive()};
+            private  final String title[]= new String[]{"two","three","four","five"};
             @Override
             public Fragment getItem(int position) {
                 return fragments[position];

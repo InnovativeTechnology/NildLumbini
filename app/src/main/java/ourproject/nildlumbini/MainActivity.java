@@ -4,7 +4,6 @@ package ourproject.nildlumbini;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -28,14 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
-import ourproject.nildlumbini.Fragment.FragmentFive;
-import ourproject.nildlumbini.Fragment.FragmentFour;
-import ourproject.nildlumbini.Fragment.FragmentOne;
-import ourproject.nildlumbini.Fragment.FragmentSix;
-import ourproject.nildlumbini.Fragment.FragmentThree;
-import ourproject.nildlumbini.Fragment.FragmentTwo;
 
 public class MainActivity extends AppCompatActivity {
 

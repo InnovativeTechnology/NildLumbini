@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ourproject.nildlumbini">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,8 +23,9 @@
         <activity android:name=".UserProfileActivity" />
         <activity
             android:name=".DiaLog_Add"
-            android:theme="@style/Theme.AppCompat.Dialog"></activity>
-        <activity android:name=".LoginActivity"></activity>
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivityCheck"></activity>
     </application>
 
 </manifest>

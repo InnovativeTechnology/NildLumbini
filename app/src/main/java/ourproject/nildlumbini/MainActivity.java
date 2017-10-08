@@ -55,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initDrawerLayout();
         initNavigationView();
+/*
         tabLayout= (TabLayout) findViewById(R.id.tabs);
         initPager();
+*/
 
     }
 
@@ -140,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
             }
+                break;
+            case R.id.check:
+                startActivity(new Intent(MainActivity.this,MainActivityCheck.class));
                 break;
            case R.id.logout1:
            {

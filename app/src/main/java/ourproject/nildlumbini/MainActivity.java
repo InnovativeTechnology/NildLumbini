@@ -1,6 +1,4 @@
 package ourproject.nildlumbini;
-
-
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -17,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,12 +27,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+
+
 public class MainActivity extends AppCompatActivity {
-
-    private FirebaseAuth firebaseAuth;
-
     NavigationView navigationView;
     Toolbar toolbar;
+    FirebaseAuth firebaseAuth;
     DrawerLayout drawerLayout;
     FragmentPagerAdapter mPagerAdapter;
     ViewPager viewPager;
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
             }
+
                 break;
             case R.id.check:
                 startActivity(new Intent(MainActivity.this,MainActivityCheck.class));
@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
     }
 
     // This function will change the menu based on the user is logged in or not.
@@ -194,8 +195,6 @@ public class MainActivity extends AppCompatActivity {
             navigationView.getMenu().setGroupVisible(R.id.group_after_login, false);
         }
     }
-
-
     }
 
 

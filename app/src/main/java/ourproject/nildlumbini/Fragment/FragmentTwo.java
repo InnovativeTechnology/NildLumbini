@@ -57,6 +57,7 @@ public class FragmentTwo extends Fragment {
         GetDataForFragments g =  new GetDataForFragments(getActivity(), option, myRecyle);
         g.loadData();
         g.setData();
+
         return  view;
 
     }

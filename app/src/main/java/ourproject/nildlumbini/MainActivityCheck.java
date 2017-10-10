@@ -32,7 +32,7 @@ public class MainActivityCheck extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter= new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[]  fragments= new Fragment[]{new FragmentTwo(),new FragmentThree(),new FragmentFour(),new FragmentFive()};
-            private  final String title[]= new String[]{"two","three","four","five"};
+            private  final String title[]= new String[]{"Motivation","Friends","BirthDay","Love"};
             @Override
             public Fragment getItem(int position) {
                 return fragments[position];

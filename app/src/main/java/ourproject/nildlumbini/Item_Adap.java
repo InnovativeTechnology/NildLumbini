@@ -46,13 +46,26 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 {
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
+    String name;
     public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;
         this.context =context;
     }
+
+    public Item_Adap(List<RetrieveData> retrieves, Context context, String option) {
+        this.retrieve=retrieves;
+        this.context =context;
+        this.name = option;
+    }
+
     public Item_Adap.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View item= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post,parent,false);
+        View item;
+        if(name == "userProfile") {
+            item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_profile, parent, false);
+        }else {
+            item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
+        }
         return  new ViewHolder(item);
     }
 

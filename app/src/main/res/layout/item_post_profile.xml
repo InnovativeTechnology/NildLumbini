@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/l1"
+                android:weightSum="2"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="15sp"
+                    android:layout_width="242dp"
+                    android:text="Ramesh Pokhrel Wrotes "
+                    android:gravity="center"
+                    android:id="@+id/name"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="15sp"
+                    android:text=" option "
+                    android:layout_gravity="center"
+                    android:layout_width="148dp"
+                    android:id="@+id/option"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/l2"
+            android:layout_below="@+id/l1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Date"
+                android:layout_gravity="right"
+                android:gravity="right"
+               />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/l3"
+            android:layout_below="@+id/l1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/date"
+                android:layout_gravity="right"
+                android:gravity="right" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/l4"
+            android:layout_below="@+id/l3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/title"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:text="Title"/>
+        </LinearLayout>
+        <ImageView
+            android:layout_below="@+id/l4"
+            android:layout_width="match_parent"
+            android:id="@+id/image"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:gravity="center"/>
+        <TextView
+            android:layout_below="@+id/image"
+            android:text="blah blah blah blah blah blah blah blah blah blah blah blah"
+            android:layout_width="match_parent"
+            android:id="@+id/article"
+            android:clickable="false"
+            android:maxLines="2"
+            android:lines="2"
+            android:ellipsize="end"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

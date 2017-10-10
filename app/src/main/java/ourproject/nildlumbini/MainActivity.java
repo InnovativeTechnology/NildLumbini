@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDrawerLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
     }
@@ -101,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                     new NavigationView.OnNavigationItemSelectedListener() {
                         @Override
                         public boolean onNavigationItemSelected(MenuItem menuItem) {
-
                             navigationMenuChanged(menuItem);
                             return true;
                         }
@@ -197,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
             navigationView.getMenu().setGroupVisible(R.id.group_after_login, false);
         }
     }
-    }
+}
 
 
 

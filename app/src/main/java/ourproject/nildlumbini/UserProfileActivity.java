@@ -18,6 +18,8 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import ourproject.nildlumbini.Fragment.GetDataForFragments;
+
 public class UserProfileActivity extends AppCompatActivity {
 
     Button userProfileAddButton;
@@ -25,6 +27,8 @@ public class UserProfileActivity extends AppCompatActivity {
     FirebaseAuth mauth;
     Toolbar toolbar;
     //AlertDialogManage alt;
+
+    static  String option = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +38,17 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar();
         mauth= FirebaseAuth.getInstance();
+        option = mauth.getCurrentUser().getEmail().toString();
         userProfileAddButton = (Button) findViewById(R.id.user_profile_add_button);
         userProfileRecycler = (RecyclerView) findViewById(R.id.user_profile_recycler);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(UserProfileActivity.this, LinearLayoutManager.VERTICAL, false);
         userProfileRecycler.setLayoutManager(layoutManager);
         userProfileRecycler.setItemAnimator(new DefaultItemAnimator());
+
+        GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
+        g.loadDataA();
+        g.setDataA();
 
         userProfileAddButton.setOnClickListener(new View.OnClickListener() {
             @Override

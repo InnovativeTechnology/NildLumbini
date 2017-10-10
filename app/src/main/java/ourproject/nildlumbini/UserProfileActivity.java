@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -49,6 +50,8 @@ public class UserProfileActivity extends AppCompatActivity {
         GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
         g.loadDataA();
         g.setDataA();
+
+
 
         userProfileAddButton.setOnClickListener(new View.OnClickListener() {
             @Override

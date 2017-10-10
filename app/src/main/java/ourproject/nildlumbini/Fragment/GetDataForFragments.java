@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +27,7 @@ import ourproject.nildlumbini.UserProfileActivity;
 public class GetDataForFragments {
     FragmentActivity activity;
     String option;
-    RecyclerView myRecyle;
+    static RecyclerView myRecyle;
 
     UserProfileActivity activitya;
 
@@ -78,6 +79,12 @@ public class GetDataForFragments {
     }
     public void setDataA(){
         myRecyle.setAdapter(new Item_Adap(arrayList, activitya, "userProfile"));
+//        myRecyle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
     }
 }

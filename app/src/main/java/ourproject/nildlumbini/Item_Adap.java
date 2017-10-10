@@ -47,21 +47,23 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
     public static String activityName;
+    String t="";
     public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;
         this.context =context;
     }
 
-    public Item_Adap(List<RetrieveData> retrieves, Context context, String option) {
+    public Item_Adap(List<RetrieveData> retrieves, Context context, String option,String t) {
         this.retrieve=retrieves;
         this.context =context;
         this.activityName = option;
+        this.t= t;
     }
 
     public Item_Adap.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item;
-        if(activityName == "userProfile") {
+        if(activityName == "userProfile" && t.equals("e")) {
             item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_profile, parent, false);
         }else {
             item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
@@ -79,7 +81,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         holder.article.setText(retrieve1.article);
         Picasso.with(context).load(retrieve1.imgUrl).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
 
-        if(activityName == "userProfile"){
+        if(activityName == "userProfile"&& t.equals("e")){
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

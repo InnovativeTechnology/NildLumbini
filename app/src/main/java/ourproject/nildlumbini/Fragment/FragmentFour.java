@@ -36,7 +36,7 @@ public class FragmentFour extends Fragment {
         myRecyle.setLayoutManager(layoutManager);
         myRecyle.setItemAnimator(new DefaultItemAnimator());
 
-        GetDataForFragments g =  new GetDataForFragments(getActivity(), option, myRecyle);
+        GetDataForFragments g =  new GetDataForFragments(getActivity(), option, myRecyle,"p");
         g.loadData();
         g.setData();
         return  view;

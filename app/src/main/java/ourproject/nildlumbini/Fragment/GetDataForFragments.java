@@ -28,21 +28,19 @@ public class GetDataForFragments {
     FragmentActivity activity;
     String option;
     static RecyclerView myRecyle;
-    UserProfileActivity activitya;
+
+
+    Activity activitya;
+
     ArrayList<RetrieveData> arrayList;
+    String t;
 
-    public GetDataForFragments(FragmentActivity activity,  String option, RecyclerView myRecyle){
-        this.activity = activity;
-        this.option = option;
-        this.myRecyle = myRecyle;
-    }
-
-
-
-    public GetDataForFragments(UserProfileActivity applicationContext, String option, RecyclerView userProfileRecycler, String t) {
+    public GetDataForFragments(Activity applicationContext, String option, RecyclerView userProfileRecycler, String t) {
         this.activitya =  applicationContext;
         this.option = option;
         this.myRecyle = userProfileRecycler;
+        this.t=t;
+
     }
 
     public void loadData(){
@@ -76,7 +74,7 @@ public class GetDataForFragments {
         }
     }
     public void setDataA(){
-        myRecyle.setAdapter(new Item_Adap(arrayList, activitya, "userProfile"));
+        myRecyle.setAdapter(new Item_Adap(arrayList, activitya, "userProfile",t));
 //        myRecyle.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

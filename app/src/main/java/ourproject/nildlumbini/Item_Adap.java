@@ -82,18 +82,27 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         Picasso.with(context).load(retrieve1.imgUrl).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
 
         if(activityName == "userProfile"&& t.equals("e")){
-            holder.cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Hello",Toast.LENGTH_LONG).show();
-                }
-            });
+
 
             holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     Toast.makeText(context, "Long pressed",Toast.LENGTH_LONG).show();
                     return false;
+                }
+            });
+
+            holder.edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Edit pressed",Toast.LENGTH_LONG).show();
+                }
+            });
+
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Delete pressed",Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -108,7 +117,11 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         TextView name,option,date,title;
         TextView article ;
         ImageView img;
+
         CardView cardView;
+        ImageView edit;
+        ImageView delete;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -121,6 +134,8 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 
             if(activityName == "userProfile"){
                 cardView = itemView.findViewById(R.id.card);
+                edit = itemView.findViewById(R.id.edt);
+                delete = itemView.findViewById(R.id.dlt);
             }
 
         }

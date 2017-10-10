@@ -46,7 +46,11 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 {
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
+
+    Context context1;
+    List<RetrieveData> retrieve1 = new ArrayList<>();
     public static String activityName;
+
     public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;
@@ -54,8 +58,8 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     }
 
     public Item_Adap(List<RetrieveData> retrieves, Context context, String option) {
-        this.retrieve=retrieves;
-        this.context =context;
+        this.retrieve1=retrieves;
+        this.context1 =context;
         this.activityName = option;
     }
 
@@ -83,14 +87,14 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Hello",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context1, "Hello",Toast.LENGTH_LONG).show();
                 }
             });
-            
+
             holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(context, "Long pressed",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context1, "Long pressed",Toast.LENGTH_LONG).show();
                     return false;
                 }
             });

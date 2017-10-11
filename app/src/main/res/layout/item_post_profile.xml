@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_height="match_parent">
             <LinearLayout
                 android:layout_margin="5dp"
@@ -98,13 +98,27 @@
                 android:ellipsize="end"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
-
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:id="@+id/dlt"
-            android:text="delete"
-            android:layout_weight="3"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="3.5">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/edt"
+                android:src="@drawable/ic_border_color_black_24dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/dlt"
+                android:src="@drawable/ic_delete_forever_black_24dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt"/>
+
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 

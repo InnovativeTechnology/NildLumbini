@@ -29,6 +29,7 @@ public class GetDataForFragments {
     String option;
     static RecyclerView myRecyle;
 
+
     Activity activitya;
 
     ArrayList<RetrieveData> arrayList;

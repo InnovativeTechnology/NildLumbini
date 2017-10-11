@@ -146,18 +146,23 @@ public class MainActivity extends AppCompatActivity {
                 boolean t = false;
                 //if(dataSnapshot.hasChild())
                 final ArrayList<RetrieveData> doclist= new ArrayList<>();
+                String keys = "";
                 for(DataSnapshot note :dataSnapshot.getChildren())
                 {
                    try {
                        if (note.getChildrenCount() > 0) {
+
                            String na = note.child("name").getValue().toString();
                            String name =hell(na);
+
+                           keys = keys +"\n "+ note.getKey();
+                           String UserIds = note.getKey();
                            String option = note.child("option").getValue().toString();
                            String title = note.child("title").getValue().toString();
                            String article = note.child("article").getValue().toString();
                            String imgUrl = note.child("imgUrl").getValue().toString();
                            String Date = note.child("Date").getValue().toString();
-                           doclist.add(new RetrieveData(name, option, title, article, imgUrl, Date));
+                           doclist.add(new RetrieveData(UserIds, name, option, title, article, imgUrl, Date));
                            t = true;
                        }
                    }catch (Exception e)
@@ -169,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                        }
                    }
                 }
+                //Toast.makeText(getApplicationContext(),keys,Toast.LENGTH_LONG).show();
                 if(t == true) {
                     new MyList(doclist);
                     myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));

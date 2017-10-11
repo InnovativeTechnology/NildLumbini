@@ -28,8 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+//import com.theartofdev.edmodo.cropper.CropImage;
+//import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class DiaLog_Add extends AppCompatActivity {
     EditText title,article;
@@ -59,7 +59,7 @@ public class DiaLog_Add extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line,opt);
         option.setAdapter(adapter);
-      Timestamp= ExtractDateTime.getDate();
+        Timestamp= ExtractDateTime.getDate();
 
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile")/*.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"")*/;
        // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
@@ -99,20 +99,23 @@ catch (Exception e)
                     newPost.child("imgUrl").setValue(downloadUri.toString());
                     newPost.child("Date").setValue(Timestamp);
 
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                    map.put("option",option.getSelectedItem().toString());
-                    map.put("title",title.getText().toString());
-                    map.put("article",article.getText().toString());
-                    map.put("imgUrl",downloadUri.toString());
-                    map.put("Date", String.valueOf((Timestamp)));
+
+//                    Map<String, String> map = new HashMap<String, String>();
+//                    map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+//                    map.put("option",option.getSelectedItem().toString());
+//                    map.put("title",title.getText().toString());
+//                    map.put("article",article.getText().toString());
+//                    map.put("imgUrl",downloadUri.toString());
+//                    map.put("Date",Timestamp);
+
            //  newPost1.push().setValue(map);
 
                     progressDialog.dismiss();
                     startActivity(new Intent(DiaLog_Add.this,MainActivity.class));
                     finish();
                 }
-            });}
+            });
+            }
         });
         mselectImage.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,7 +6,6 @@ package ourproject.nildlumbini;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,19 +34,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -90,11 +82,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     }
 
     @Override
-
-//    public void onBindViewHolder(final ViewHolder holder, int position) {
-
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final RetrieveData retrieve1 = retrieve.get(position);
         holder.name.setText(retrieve1.name);
         holder.option.setText(retrieve1.option);
@@ -121,13 +109,10 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                 }
             });
 
-
-
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                     Query applesQuery = ref.child("UserFile").child("-KunH-gPeULlRl2dy-rK");
 
                     applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -141,14 +126,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            Log.e(TAG, "onCancelled", databaseError.toException());*/
-                    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                    Toast.makeText(context, "Delete pressed "+retrieve1.userIds,Toast.LENGTH_LONG).show();
-                    database.child(retrieve1.userIds).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(context, "Delete pressed",Toast.LENGTH_LONG).show();
-
+                            Log.e(TAG, "onCancelled", databaseError.toException());
                         }
                     });
                 }

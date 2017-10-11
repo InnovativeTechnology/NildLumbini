@@ -25,7 +25,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-
 public class DiaLog_Add extends AppCompatActivity {
     EditText title,article;
     Button add;
@@ -54,21 +53,21 @@ public class DiaLog_Add extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line,opt);
         option.setAdapter(adapter);
-        Timestamp= ExtractDateTime.getDate();
+      Timestamp= ExtractDateTime.getDate();
 
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile")/*.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"")*/;
-        // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
+       // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
 
 
         sReference = FirebaseStorage.getInstance().getReference();
 
-        try {
-            title = (EditText) findViewById(R.id.title1);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+try {
+    title = (EditText) findViewById(R.id.title1);
+}
+catch (Exception e)
+{
+    e.printStackTrace();
+}
         article= (EditText) findViewById(R.id.article);
         add= (Button) findViewById(R.id.addButton);
         add.setOnClickListener(new View.OnClickListener() {
@@ -82,41 +81,40 @@ public class DiaLog_Add extends AppCompatActivity {
                     progressDialog.show();
 
                     if(mImage!=null) {
-                        StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
-                        filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                downloadUri = taskSnapshot.getDownloadUrl();
-                                DatabaseReference newPost = firebaseDatabase.push();
-                                //  DatabaseReference newPost1 = firebaseDatabase1;
-                                newPost.child("imgUrl").setValue(downloadUri.toString());
-                                addChild(newPost,progressDialog);
-                                Map<String, String> map = new HashMap<String, String>();
-                                map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                map.put("option", option.getSelectedItem().toString());
-                                map.put("title", title.getText().toString());
-                                map.put("article", article.getText().toString());
-                                map.put("imgUrl", downloadUri.toString());
-                                map.put("Date", Timestamp);
-                                //  newPost1.push().setValue(map);
+                    StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
+                    filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            downloadUri = taskSnapshot.getDownloadUrl();
+                            DatabaseReference newPost = firebaseDatabase.push();
+                            //  DatabaseReference newPost1 = firebaseDatabase1;
+                            newPost.child("imgUrl").setValue(downloadUri.toString());
+                           addChild(newPost,progressDialog);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                            map.put("option", option.getSelectedItem().toString());
+                            map.put("title", title.getText().toString());
+                            map.put("article", article.getText().toString());
+                            map.put("imgUrl", downloadUri.toString());
+                            map.put("Date", Timestamp);
+                            //  newPost1.push().setValue(map);
 /*
                             startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
                             finish();*/
-                            }
-                        });
+                        }
+                    });
 
 
-                    }
-                    else {
-                        addChild(firebaseDatabase.push(), progressDialog);
-
-
-                    }
                 }
-                else
-                {
-                    Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
-                }}
+                else {
+                    addChild(firebaseDatabase.push(), progressDialog);
+
+                }
+            }
+            else
+            {
+                Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
+            }}
         });
         mselectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +145,7 @@ public class DiaLog_Add extends AppCompatActivity {
         newPost.child("article").setValue(article.getText().toString());
         newPost.child("Date").setValue(Timestamp);
         progressDialog.dismiss();
-        //    startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
+    //    startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
         finish();
     }
 

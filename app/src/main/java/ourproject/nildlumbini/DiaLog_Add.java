@@ -110,7 +110,7 @@ catch (Exception e)
                 else {
                     addChild(firebaseDatabase.push(), progressDialog);
 
->>>>>>> checkBranch
+
                 }
             }
             else

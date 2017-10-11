@@ -40,7 +40,7 @@ public class DiaLog_Add extends AppCompatActivity {
     DatabaseReference firebaseDatabase;
 
 
-    String  Timestamp;
+    String Timestamp;
 
     Uri downloadUri;
     @Override
@@ -103,6 +103,7 @@ catch (Exception e)
                             finish();*/
                         }
                     });
+
 
                 }
                 else {

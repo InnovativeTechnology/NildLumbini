@@ -37,6 +37,7 @@ public class GetDataForFragments {
 
         arrayList= new ArrayList<>();
         ArrayList<RetrieveData> arrayList1=MyList.arrayList();
+
         for(RetrieveData r:arrayList1)
         {
             if(r.option.equals(option))
@@ -57,7 +58,10 @@ public class GetDataForFragments {
         ArrayList<RetrieveData> arrayList1=MyList.arrayList();
         for(RetrieveData r:arrayList1)
         {
-            if(r.name.equals(option))
+            String s= r.name.split(" ")[0];
+
+            String ss= option.split("@")[0];
+            if(s.equals(ss))
             {
                 arrayList.add(new RetrieveData(r.userIds, r.name, option,r.title,r.article, r.imgUrl, r.date));
             }
@@ -65,12 +69,5 @@ public class GetDataForFragments {
     }
     public void setDataA(){
         myRecyle.setAdapter(new Item_Adap(arrayList, activitya, "userProfile",t));
-//        myRecyle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
     }
 }

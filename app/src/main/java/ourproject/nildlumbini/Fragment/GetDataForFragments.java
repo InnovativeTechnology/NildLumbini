@@ -69,12 +69,5 @@ public class GetDataForFragments {
     }
     public void setDataA(){
         myRecyle.setAdapter(new Item_Adap(arrayList, activitya, "userProfile",t));
-//        myRecyle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
     }
 }

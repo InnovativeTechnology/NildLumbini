@@ -47,7 +47,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
     public static String activityName;
-    String t="";
+    public static String t="";
     public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;
@@ -96,6 +96,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                     return false;
                 }
             });
+
         }
 
     }
@@ -119,8 +120,9 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             title= itemView.findViewById(R.id.title);
             img= itemView.findViewById(R.id.image);
 
-            if(activityName == "userProfile"){
+            if(activityName == "userProfile"&& t.equals("e")){
                 cardView = itemView.findViewById(R.id.card);
+
             }
 
         }

@@ -17,18 +17,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class DiaLog_Add extends AppCompatActivity {
     EditText title,article;
@@ -79,39 +74,46 @@ catch (Exception e)
             @Override
             public void onClick(View v)      {
                 final ProgressDialog progressDialog= new ProgressDialog(DiaLog_Add.this);
-                progressDialog.setTitle("uploading..");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
 
-                StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
-                filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    downloadUri = taskSnapshot.getDownloadUrl();
-                    DatabaseReference newPost = firebaseDatabase.push();
-                  //  DatabaseReference newPost1 = firebaseDatabase1;
+                if(valid()){
+                    progressDialog.setTitle("uploading..");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
 
-                    newPost.child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                    newPost.child("option").setValue(option.getSelectedItem().toString());
-                    newPost.child("title").setValue(title.getText().toString());
-                    newPost.child("article").setValue(article.getText().toString());
-                    newPost.child("imgUrl").setValue(downloadUri.toString());
-                    newPost.child("Date").setValue(Timestamp);
+                    if(mImage!=null) {
+                    StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
+                    filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            downloadUri = taskSnapshot.getDownloadUrl();
+                            DatabaseReference newPost = firebaseDatabase.push();
+                            //  DatabaseReference newPost1 = firebaseDatabase1;
+                            newPost.child("imgUrl").setValue(downloadUri.toString());
+                           addChild(newPost,progressDialog);
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                            map.put("option", option.getSelectedItem().toString());
+                            map.put("title", title.getText().toString());
+                            map.put("article", article.getText().toString());
+                            map.put("imgUrl", downloadUri.toString());
+                            map.put("Date", Timestamp);
+                            //  newPost1.push().setValue(map);
+/*
+                            startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
+                            finish();*/
+                        }
+                    });
 
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                    map.put("option",option.getSelectedItem().toString());
-                    map.put("title",title.getText().toString());
-                    map.put("article",article.getText().toString());
-                    map.put("imgUrl",downloadUri.toString());
-                    map.put("Date",Timestamp);
-           //  newPost1.push().setValue(map);
-
-                    progressDialog.dismiss();
-                    startActivity(new Intent(DiaLog_Add.this,MainActivity.class));
-                    finish();
                 }
-            });}
+                else {
+                    addChild(firebaseDatabase.push(), progressDialog);
+
+                }
+            }
+            else
+            {
+                Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
+            }}
         });
         mselectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +126,28 @@ catch (Exception e)
 
 
     }
+
+    private boolean valid() {
+        Boolean t= true;
+        String s=title.getText().toString();
+        if(s.equals(""))
+            t=false;
+        else if(article.getText().toString().equals(""))
+            t=false;
+        return  t;
+    }
+
+    private void addChild(DatabaseReference newPost, ProgressDialog progressDialog) {
+        newPost.child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        newPost.child("option").setValue(option.getSelectedItem().toString());
+        newPost.child("title").setValue(title.getText().toString());
+        newPost.child("article").setValue(article.getText().toString());
+        newPost.child("Date").setValue(Timestamp);
+        progressDialog.dismiss();
+    //    startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     final ArrayList<RetrieveData> doclist= new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,18 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.show();
                 doclist.clear();
                 bindData();
-
             }
         });
-
-
     }
 
     private void initUtils() {
         firebaseAuth=FirebaseAuth.getInstance();
         progressDialog= new ProgressDialog(MainActivity.this);
         progressDialog.setTitle("refreshing..");
-
     }
 
     private void initUI(){
@@ -135,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
          openFragment(menuItem.getItemId());
             menuItem.setChecked(true);
             drawerLayout.closeDrawers();
-
     }
     public void openFragment(int menuId) {
 
@@ -206,11 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("TAG",databaseError.toString());
             }
         });
-
-
-
     }
-
     private String hell(String name) {
         String s=name.split("@")[0];
         String ss=s+" Posted ";

@@ -36,8 +36,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+<<<<<<< HEAD
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+=======
+>>>>>>> da5c60dc199fba01380dee19ed9c8b9a59a5ff0b
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,7 +88,11 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     }
 
     @Override
+<<<<<<< HEAD
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+=======
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+>>>>>>> da5c60dc199fba01380dee19ed9c8b9a59a5ff0b
         final RetrieveData retrieve1 = retrieve.get(position);
         holder.name.setText(retrieve1.name);
         holder.option.setText(retrieve1.option);
@@ -117,6 +124,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+<<<<<<< HEAD
                     final ProgressDialog dialog = new ProgressDialog(context);
                     dialog.setMessage("Deleting....");
                     dialog.show();
@@ -127,6 +135,23 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(context,retrieve1.userIds.toString(),Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+=======
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                    Query applesQuery = ref.child("UserFile").child("-KunH-gPeULlRl2dy-rK");
+
+                    applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                appleSnapshot.getRef().removeValue();
+                                Toast.makeText(context,"dlt",Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "onCancelled", databaseError.toException());
+>>>>>>> da5c60dc199fba01380dee19ed9c8b9a59a5ff0b
                         }
                     });
                 }

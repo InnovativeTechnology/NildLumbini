@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class DiaLog_Add extends AppCompatActivity {
     DatabaseReference firebaseDatabase;
 
 
-    String  Timestamp;
+    String Timestamp;
 
     Uri downloadUri;
     @Override
@@ -98,6 +99,7 @@ catch (Exception e)
                     newPost.child("imgUrl").setValue(downloadUri.toString());
                     newPost.child("Date").setValue(Timestamp);
 
+<<<<<<< HEAD
 //                    Map<String, String> map = new HashMap<String, String>();
 //                    map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
 //                    map.put("option",option.getSelectedItem().toString());
@@ -105,6 +107,15 @@ catch (Exception e)
 //                    map.put("article",article.getText().toString());
 //                    map.put("imgUrl",downloadUri.toString());
 //                    map.put("Date",Timestamp);
+=======
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("name",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                    map.put("option",option.getSelectedItem().toString());
+                    map.put("title",title.getText().toString());
+                    map.put("article",article.getText().toString());
+                    map.put("imgUrl",downloadUri.toString());
+                    map.put("Date", String.valueOf((Timestamp)));
+>>>>>>> da5c60dc199fba01380dee19ed9c8b9a59a5ff0b
            //  newPost1.push().setValue(map);
 
                     progressDialog.dismiss();

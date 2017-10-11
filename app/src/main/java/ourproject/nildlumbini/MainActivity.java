@@ -151,9 +151,14 @@ public class MainActivity extends AppCompatActivity {
                 {
                    try {
                        if (note.getChildrenCount() > 0) {
+<<<<<<< HEAD
                            keys = keys +"\n "+ note.getKey();
                            String UserIds = note.getKey();
                            String name = note.child("name").getValue().toString();
+=======
+                           String na = note.child("name").getValue().toString();
+                           String name =hell(na);
+>>>>>>> da5c60dc199fba01380dee19ed9c8b9a59a5ff0b
                            String option = note.child("option").getValue().toString();
                            String title = note.child("title").getValue().toString();
                            String article = note.child("article").getValue().toString();
@@ -186,6 +191,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    private String hell(String name) {
+        String s=name.split("@")[0];
+        String ss=s+" Posted ";
+        return ss;
 
     }
 

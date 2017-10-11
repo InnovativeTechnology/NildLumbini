@@ -1,6 +1,7 @@
 package ourproject.nildlumbini;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -13,7 +14,10 @@ public class ExtractDateTime {
     public static String getDate()
     {
         //20170816_184324
-        return  new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+      // return  new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+
+        return  new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
     }
     public static String getDateForm()
     {

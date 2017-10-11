@@ -61,6 +61,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     {
         this.retrieve=retrieves;
         this.context =context;
+        activityName = "";
     }
 
     public Item_Adap(List<RetrieveData> retrieves, Context context, String option,String t) {
@@ -72,7 +73,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 
     public Item_Adap.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item;
-        if(activityName == "userProfile" && t.equals("e")) {
+        if(activityName == "userProfile") {
             item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_profile, parent, false);
         }else {
             item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
@@ -90,7 +91,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         holder.article.setText(retrieve1.article);
         Picasso.with(context).load(retrieve1.imgUrl).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
 
-        if(activityName == "userProfile"&& t.equals("e")){
+        if(activityName == "userProfile"){
 
 
             holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -157,7 +158,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             title= itemView.findViewById(R.id.title);
             img= itemView.findViewById(R.id.image);
 
-            if(activityName == "userProfile"&& t.equals("e")){
+            if(activityName == "userProfile"){
                 cardView = itemView.findViewById(R.id.card);
 
                 edit = itemView.findViewById(R.id.edt);

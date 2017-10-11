@@ -47,6 +47,7 @@ public class GetDataForFragments {
 
         arrayList= new ArrayList<>();
         ArrayList<RetrieveData> arrayList1=MyList.arrayList();
+
         for(RetrieveData r:arrayList1)
         {
             if(r.option.equals(option))
@@ -67,7 +68,10 @@ public class GetDataForFragments {
         ArrayList<RetrieveData> arrayList1=MyList.arrayList();
         for(RetrieveData r:arrayList1)
         {
-            if(r.name.equals(option))
+            String s= r.name.split(" ")[0];
+
+            String ss= option.split("@")[0];
+            if(s.equals(ss))
             {
                 arrayList.add(new RetrieveData(r.name, option,r.title,r.article, r.imgUrl, r.date));
             }

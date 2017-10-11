@@ -1,10 +1,12 @@
 package ourproject.nildlumbini;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
+    ProgressDialog progressDialog;
     Toolbar toolbar;
     FirebaseAuth firebaseAuth;
     DrawerLayout drawerLayout;
@@ -38,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     RecyclerView myRecyle;
+    SwipeRefreshLayout swip;
+    SwipeRefreshLayout swipeRefreshLayout;
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    final ArrayList<RetrieveData> doclist= new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +56,26 @@ public class MainActivity extends AppCompatActivity {
         initUI();
         initNavigationView();
         bindData();
+        swipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.swip);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                progressDialog.show();
+                doclist.clear();
+                bindData();
+
+            }
+        });
+
 
     }
 
     private void initUtils() {
         firebaseAuth=FirebaseAuth.getInstance();
+        progressDialog= new ProgressDialog(MainActivity.this);
+        progressDialog.setTitle("refreshing..");
+
     }
 
     private void initUI(){
@@ -64,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager=new GridLayoutManager(MainActivity.this,1);
         myRecyle.setLayoutManager(layoutManager);
         myRecyle.setItemAnimator(new DefaultItemAnimator());
+        swip= (SwipeRefreshLayout) findViewById(R.id.swip);
+
 
     }
 
@@ -170,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                        if(t == true) {
                            new MyList(doclist);
                            myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
+                           progressDialog.dismiss();
 
                        }
                    }

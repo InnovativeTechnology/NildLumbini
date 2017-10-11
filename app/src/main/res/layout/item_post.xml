@@ -17,11 +17,12 @@
                 android:weightSum="2"
                 android:orientation="horizontal">
                 <TextView
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:layout_width="242dp"
                     android:text="Ramesh Pokhrel Wrotes "
-                    android:gravity="center"
+                    android:gravity="left"
                     android:id="@+id/name"
+                    android:textColor="@color/back"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="15sp"
@@ -69,7 +70,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/title"
                 android:layout_gravity="right"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="Title"/>
         </LinearLayout>
         <ImageView

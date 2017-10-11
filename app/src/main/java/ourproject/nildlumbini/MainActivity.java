@@ -150,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                    try {
                        if (note.getChildrenCount() > 0) {
-                           String name = note.child("name").getValue().toString();
+                           String na = note.child("name").getValue().toString();
+                           String name =hell(na);
                            String option = note.child("option").getValue().toString();
                            String title = note.child("title").getValue().toString();
                            String article = note.child("article").getValue().toString();
@@ -182,6 +183,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    private String hell(String name) {
+        String s=name.split("@")[0];
+        String ss=s+" Posted ";
+        return ss;
 
     }
 

@@ -7,7 +7,7 @@
             android:checked="true"
             android:title="home" />
         <item android:id="@+id/check"
-            android:title="check"
+            android:title="Category"
             />
     </group>
 
@@ -21,7 +21,7 @@
             android:id="@+id/logout1"
             android:title="Log Out" />
         <item android:id="@+id/check1"
-            android:title="check"
+            android:title="Category"
             />
     </group>
 

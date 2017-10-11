@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     final ArrayList<RetrieveData> doclist= new ArrayList<>();
 
 
+    TextView email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,23 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         progressDialog= new ProgressDialog(MainActivity.this);
         progressDialog.setTitle("refreshing..");
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        View header= navigationView.getHeaderView(0);
+        email= (TextView) header.findViewById(R.id.email);
+        if(firebaseAuth.getCurrentUser()!=null) {
+            try {
+                email.setText(firebaseAuth.getCurrentUser().getEmail());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else email.setText("");
 
     }
 
@@ -153,8 +173,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
            case R.id.logout1:
            {
-               Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
-           }
+               firebaseAuth.signOut();
+               startActivity(new Intent(MainActivity.this,MainActivity.class));
+               finish();           }
                break;
 
             default:

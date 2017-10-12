@@ -24,9 +24,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class DiaLog_Add extends AppCompatActivity {
-    EditText title,article;
+    EditText title, article;
     Button add;
     Spinner option;
 
@@ -43,120 +46,122 @@ public class DiaLog_Add extends AppCompatActivity {
     String Timestamp;
 
     Uri downloadUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_layout);
-        option= (Spinner) findViewById(R.id.option);
+        option = (Spinner) findViewById(R.id.option);
         final String[] opt = this.getResources().getStringArray(R.array.option);
-        mselectImage = (ImageButton)findViewById(R.id.selectImage);
+        mselectImage = (ImageButton) findViewById(R.id.selectImage);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line,opt);
+                (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line, opt);
         option.setAdapter(adapter);
-        Timestamp= ExtractDateTime.getDate();
+        Timestamp = ExtractDateTime.getDate();
 
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile")/*.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"")*/;
-       // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
+        // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
 
 
         sReference = FirebaseStorage.getInstance().getReference();
 
-try {
-    title = (EditText) findViewById(R.id.title1);
-}
-catch (Exception e)
-{
-    e.printStackTrace();
-}
-        article= (EditText) findViewById(R.id.article);
-        add= (Button) findViewById(R.id.addButton);
+        try {
+            title = (EditText) findViewById(R.id.title1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        article = (EditText) findViewById(R.id.article);
+        add = (Button) findViewById(R.id.addButton);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)      {
-                final ProgressDialog progressDialog= new ProgressDialog(DiaLog_Add.this);
+            public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(DiaLog_Add.this);
 
-                if(valid()){
+                if (valid()) {
                     progressDialog.setTitle("uploading..");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
 
                     final DatabaseReference newPost = firebaseDatabase.push();
-                    if(mImage!=null) {
+                    if (mImage != null) {
                         StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
                         filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 downloadUri = taskSnapshot.getDownloadUrl();
-                               // newPost.child("imgUrl").setValue(downloadUri.toString());
-                                addChild(newPost,progressDialog, downloadUri.toString());
-    //                            Map<String, String> map = new HashMap<String, String>();
-    //                            map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-    //                            map.put("option", option.getSelectedItem().toString());
-    //                            map.put("title", title.getText().toString());
-    //                            map.put("article", article.getText().toString());
-    //                            map.put("imgUrl", downloadUri.toString());
-    //                            map.put("Date", Timestamp);
+                                DatabaseReference newPost = firebaseDatabase.push();
+                                //  DatabaseReference newPost1 = firebaseDatabase1;
+                                addChild(newPost, progressDialog, downloadUri.toString());
+                                Map<String, String> map = new HashMap<String, String>();
+                                map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                map.put("option", option.getSelectedItem().toString());
+                                map.put("title", title.getText().toString());
+                                map.put("article", article.getText().toString());
+                                map.put("imgUrl", downloadUri.toString());
+                                map.put("Date", Timestamp);
                                 //  newPost1.push().setValue(map);
+/*
+                            startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
+                            finish();*/
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DiaLog_Add.this, "Connection Problem, Try again", Toast.LENGTH_SHORT).show();
+
                             }
                         });
+
+
+                    } else {
+                        addChild(firebaseDatabase.push(), progressDialog, "");
                     }
-                    else {
-                        //newPost.child("imgUrl").setValue("");
-                        addChild(newPost,progressDialog, "");
-                    }
-                }
-                else
-                {
-                    Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DiaLog_Add.this, "Please Input Valid Information..", Toast.LENGTH_SHORT).show();
                 }
             }
 
 
         });
-            mselectImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    galleryIntent.setType("image/*");
-                    startActivityForResult(galleryIntent, GALARY_FIELD);
-                }
-            });
+        mselectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, GALARY_FIELD);
+            }
+        });
 
 
     }
 
     private boolean valid() {
-        Boolean t= true;
-        String s=title.getText().toString();
-        if(s.equals(""))
-            t=false;
-        else if(article.getText().toString().equals(""))
-            t=false;
-        return  t;
+        Boolean t = true;
+        String s = title.getText().toString();
+        if (s.equals(""))
+            t = false;
+        else if (article.getText().toString().equals(""))
+            t = false;
+        return t;
     }
 
-    private void addChild(DatabaseReference newPost, ProgressDialog progressDialog, String toString) {
+
+    private void addChild(DatabaseReference newPost, ProgressDialog progressDialog, String s) {
         newPost.child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         newPost.child("option").setValue(option.getSelectedItem().toString());
         newPost.child("title").setValue(title.getText().toString());
         newPost.child("article").setValue(article.getText().toString());
-        newPost.child("imgUrl").setValue(toString);
+        newPost.child("imgUrl").setValue(s);
         newPost.child("Date").setValue(Timestamp);
         progressDialog.dismiss();
         finish();
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GALARY_FIELD && resultCode == RESULT_OK){
+        if (requestCode == GALARY_FIELD && resultCode == RESULT_OK) {
 //          /*  Uri setUri  = data.getData();
 //            CropImage.activity(setUri)
 //                    .setGuidelines(CropImageView.Guidelines.ON)
@@ -167,7 +172,7 @@ catch (Exception e)
 //
 //        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
 //            CropImage.ActivityResult resultImage = CropImage.getActivityResult(data);
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 mImage = data.getData();
                 mselectImage.setImageURI(mImage);
             }

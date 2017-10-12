@@ -120,7 +120,16 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             holder.edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Edit pressed",Toast.LENGTH_LONG).show();
+                    Intent intent= new Intent(profileActivity,DiaLog_Add.class);
+                    String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl,retrieve.get(position).userIds};
+                    intent.putExtra("message",bodyParts);
+                    context.startActivity(intent);
+
+
+
+
+
+
                 }
             });
 

@@ -61,6 +61,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     List<RetrieveData> retrieve = new ArrayList<>();
     public static String activityName;
     public static String t="";
+    //dsf;lks
     public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;

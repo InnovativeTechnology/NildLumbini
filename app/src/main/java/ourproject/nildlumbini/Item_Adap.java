@@ -60,8 +60,8 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     private static final int GALARY_FIELD = 1;
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
-    public static String activityName;
-    public static String t="";
+    public  String activityName;
+    public  String t="";
     public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;
@@ -124,12 +124,6 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                     String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl,retrieve.get(position).userIds};
                     intent.putExtra("message",bodyParts);
                     context.startActivity(intent);
-
-
-
-
-
-
                 }
             });
 
@@ -168,7 +162,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     public int getItemCount() {
         return retrieve.size();
     }
-    public static class ViewHolder extends  RecyclerView.ViewHolder {
+    public  class ViewHolder extends  RecyclerView.ViewHolder {
         TextView name,option,date,title;
         TextView article ;
         ImageView img;

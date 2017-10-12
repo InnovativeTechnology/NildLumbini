@@ -80,8 +80,6 @@ public class UserProfileActivity extends AppCompatActivity {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //MainActivity.activity.onStart();
-
                 GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
                 g.loadDataA();
                 g.setDataA();

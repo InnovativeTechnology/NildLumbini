@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
     TextView email;
 
      Uri mImage = null;
-    static MainActivity activity;
+    static MainActivity mainActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        activity = this;
+        mainActivity = this;
 
         database.keepSynced(true);
         initUtils();

@@ -1,5 +1,6 @@
 package ourproject.nildlumbini;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,9 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ourproject.nildlumbini.Fragment.GetDataForFragments;
 
@@ -31,6 +35,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
     static  String option = "";
 
+    ImageView deletePost;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,7 @@ public class UserProfileActivity extends AppCompatActivity {
         option = mauth.getCurrentUser().getEmail().toString();
         userProfileAddButton = (Button) findViewById(R.id.user_profile_add_button);
         userProfileRecycler = (RecyclerView) findViewById(R.id.user_profile_recycler);
+        deletePost = (ImageView)findViewById(R.id.dlt);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(UserProfileActivity.this, LinearLayoutManager.VERTICAL, false);
         userProfileRecycler.setLayoutManager(layoutManager);
@@ -53,19 +62,34 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
+
         userProfileAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
            startActivity(new Intent(UserProfileActivity.this, DiaLog_Add.class));
             }
         });
+
     }
+
+    public static void onPressStart(){
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
+        g.loadDataA();
+        g.setDataA();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_pro,menu);
         return true;
-
     }
 
     @Override
@@ -102,4 +126,5 @@ public class UserProfileActivity extends AppCompatActivity {
         });
         alertbox.show();
     }
+
 }

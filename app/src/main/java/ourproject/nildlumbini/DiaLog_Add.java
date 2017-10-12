@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,7 +53,7 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     String Timestamp;
-
+    TextView close;
     Uri downloadUri;
     Bundle bundle;
     @Override
@@ -259,7 +260,17 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DiaLog_Add.this,UserProfileActivity.class));
+                finish();
+            }
+        });
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

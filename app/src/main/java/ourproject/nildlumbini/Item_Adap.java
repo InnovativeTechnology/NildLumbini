@@ -1,11 +1,9 @@
 package ourproject.nildlumbini;
 
-/**
- * Created by Ramesh on 9/23/2017.
- */
-
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,8 +30,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +58,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     List<RetrieveData> retrieve = new ArrayList<>();
     public static String activityName;
     public static String t="";
+    UserProfileActivity use;
     public Item_Adap(List<RetrieveData> retrieves, Context context)
     {
         this.retrieve=retrieves;
@@ -81,8 +83,8 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         return  new ViewHolder(item);
     }
 
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final RetrieveData retrieve1 = retrieve.get(position);
         holder.name.setText(retrieve1.name);
         holder.option.setText(retrieve1.option);
@@ -108,25 +110,21 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                     Toast.makeText(context, "Edit pressed",Toast.LENGTH_LONG).show();
                 }
             });
-
-            holder.delete.setOnClickListener(new View.OnClickListener() {
+           holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                    Query applesQuery = ref.child("UserFile").child("-KunH-gPeULlRl2dy-rK");
 
-                    applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                                appleSnapshot.getRef().removeValue();
-                                Toast.makeText(context,"dlt",Toast.LENGTH_LONG).show();
-                            }
-                        }
+                    final ProgressDialog dialog = new ProgressDialog(context);
+                    dialog.setMessage("Deleting....");
+                    dialog.show();
 
+                    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                    database.child("UserFile").child(retrieve.get(position).userIds).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Log.e(TAG, "onCancelled", databaseError.toException());
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(context,retrieve1.userIds.toString(),Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+
                         }
                     });
                 }

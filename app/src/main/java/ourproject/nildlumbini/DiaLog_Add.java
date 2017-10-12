@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,11 +26,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import ourproject.nildlumbini.Fragment.GetDataForFragments;
+
+
+
 public class DiaLog_Add extends AppCompatActivity {
     EditText title,article;
     Button add;
     Spinner option;
-
+   TextView close;
     StorageReference sReference;
     private ImageButton mselectImage;
 
@@ -50,6 +55,7 @@ public class DiaLog_Add extends AppCompatActivity {
         option= (Spinner) findViewById(R.id.option);
         final String[] opt = this.getResources().getStringArray(R.array.option);
         mselectImage = (ImageButton)findViewById(R.id.selectImage);
+        close = (TextView)findViewById(R.id.closePopup);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line,opt);
         option.setAdapter(adapter);
@@ -105,25 +111,27 @@ catch (Exception e)
                     });
 
 
-                }
-                else {
-                    addChild(firebaseDatabase.push(), progressDialog);
+                    }
+                    else {
+                        addChild(firebaseDatabase.push(), progressDialog);
 
+
+                    }
+                }
+                else
+                {
+                    Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
                 }
             }
-            else
-            {
-                Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
-            }}
-        });
-        mselectImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, GALARY_FIELD);
-            }
-        });
+  });
+            mselectImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryIntent.setType("image/*");
+                    startActivityForResult(galleryIntent, GALARY_FIELD);
+                }
+            });
 
 
     }
@@ -149,6 +157,8 @@ catch (Exception e)
         finish();
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -171,5 +181,21 @@ catch (Exception e)
         }
 
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DiaLog_Add.this,UserProfileActivity.class));
+                finish();
+            }
+        });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(getApplicationContext(),"",Toast.LENGTH_SHORT).show();
     }
 }

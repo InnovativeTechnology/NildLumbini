@@ -15,6 +15,7 @@ public class RetrieveData implements Serializable {
     public String date;
     public String article;
     public String imgUrl;
+    public String userIds;
 
     public RetrieveData()
     {}

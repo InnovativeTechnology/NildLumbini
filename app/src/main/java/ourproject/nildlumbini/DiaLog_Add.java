@@ -19,15 +19,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import ourproject.nildlumbini.Fragment.GetDataForFragments;
 
 
 public class DiaLog_Add extends AppCompatActivity {
@@ -85,41 +80,34 @@ catch (Exception e)
                     progressDialog.setCancelable(false);
                     progressDialog.show();
 
-                    if(mImage!=null || mselectImage!=null) {
-                    StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
-                    filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            downloadUri = taskSnapshot.getDownloadUrl();
-                            DatabaseReference newPost = firebaseDatabase.push();
-                            //  DatabaseReference newPost1 = firebaseDatabase1;
-                            newPost.child("imgUrl").setValue(downloadUri.toString());
-                           addChild(newPost,progressDialog);
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                            map.put("option", option.getSelectedItem().toString());
-                            map.put("title", title.getText().toString());
-                            map.put("article", article.getText().toString());
-                            map.put("imgUrl", downloadUri.toString());
-                            map.put("Date", Timestamp);
-                            //  newPost1.push().setValue(map);
-/*
-                            startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
-                            finish();*/
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-
+                    final DatabaseReference newPost = firebaseDatabase.push();
+                    if(mImage!=null) {
+                        StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
+                        filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                downloadUri = taskSnapshot.getDownloadUrl();
+                               // newPost.child("imgUrl").setValue(downloadUri.toString());
+                                addChild(newPost,progressDialog, downloadUri.toString());
+    //                            Map<String, String> map = new HashMap<String, String>();
+    //                            map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+    //                            map.put("option", option.getSelectedItem().toString());
+    //                            map.put("title", title.getText().toString());
+    //                            map.put("article", article.getText().toString());
+    //                            map.put("imgUrl", downloadUri.toString());
+    //                            map.put("Date", Timestamp);
+                                //  newPost1.push().setValue(map);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                     else {
-                        addChild(firebaseDatabase.push(), progressDialog);
-
-
+                        //newPost.child("imgUrl").setValue("");
+                        addChild(newPost,progressDialog, "");
                     }
                 }
                 else
@@ -152,14 +140,14 @@ catch (Exception e)
         return  t;
     }
 
-    private void addChild(DatabaseReference newPost, ProgressDialog progressDialog) {
+    private void addChild(DatabaseReference newPost, ProgressDialog progressDialog, String toString) {
         newPost.child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         newPost.child("option").setValue(option.getSelectedItem().toString());
         newPost.child("title").setValue(title.getText().toString());
         newPost.child("article").setValue(article.getText().toString());
+        newPost.child("imgUrl").setValue(toString);
         newPost.child("Date").setValue(Timestamp);
         progressDialog.dismiss();
-    //    startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
         finish();
     }
 
@@ -169,17 +157,17 @@ catch (Exception e)
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GALARY_FIELD && resultCode == RESULT_OK){
-          /*  Uri setUri  = data.getData();
-            CropImage.activity(setUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
-
-        }
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            CropImage.ActivityResult resultImage = CropImage.getActivityResult(data);
-*/            if(resultCode == RESULT_OK){
+//          /*  Uri setUri  = data.getData();
+//            CropImage.activity(setUri)
+//                    .setGuidelines(CropImageView.Guidelines.ON)
+//                    .setAspectRatio(1, 1)
+//                    .start(this);
+//
+//        }
+//
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+//            CropImage.ActivityResult resultImage = CropImage.getActivityResult(data);
+            if(resultCode == RESULT_OK){
                 mImage = data.getData();
                 mselectImage.setImageURI(mImage);
             }
@@ -187,11 +175,5 @@ catch (Exception e)
         }
 
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Toast.makeText(getApplicationContext(),"dsbnv",Toast.LENGTH_SHORT).show();
     }
 }

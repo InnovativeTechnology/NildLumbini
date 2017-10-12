@@ -97,7 +97,11 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         holder.date.setText(retrieve1.date);
         holder.title.setText(retrieve1.title);
         holder.article.setText(retrieve1.article);
-        Picasso.with(context).load(retrieve1.imgUrl).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
+        try {
+            Picasso.with(context).load(retrieve1.imgUrl).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
+        }catch (Exception e){
+
+        }
 
         if(activityName == "userProfile"){
 

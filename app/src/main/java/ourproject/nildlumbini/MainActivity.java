@@ -96,16 +96,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         View header= navigationView.getHeaderView(0);
-        email= (TextView) header.findViewById(R.id.email);
-        if(firebaseAuth.getCurrentUser()!=null) {
-            try {
-                email.setText(firebaseAuth.getCurrentUser().getEmail());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+        email = (TextView) header.findViewById(R.id.email);
+        image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
+        editProfile = (Button)header.findViewById(R.id.buttonDrawer);
+
+        editProfile.setVisibility(View.INVISIBLE);
+
+        if(firebaseAuth.getCurrentUser() != null){
+            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+            email.setTextColor(Color.BLACK);
+
+            editProfile.setVisibility(View.VISIBLE);
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else {
+            Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
         }
-        else email.setText("");
 
     }
 
@@ -162,14 +176,11 @@ public class MainActivity extends AppCompatActivity {
 
         View header= navigationView.getHeaderView(0);
 
-        name= (TextView) header.findViewById(R.id.name);
         email = (TextView) header.findViewById(R.id.email);
         image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
         editProfile = (Button)header.findViewById(R.id.buttonDrawer);
 
-        name.setText("I am suman");
-        name.setTextColor(Color.BLACK);
-        editProfile.setVisibility(View.INVISIBLE);
+           editProfile.setVisibility(View.INVISIBLE);
 
         if(firebaseAuth.getCurrentUser() != null){
             email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
@@ -188,12 +199,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+/*
     @Override
     protected void onRestart() {
         super.onRestart();
         if(firebaseAuth.getCurrentUser() != null){
-            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+           */
+/* email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
             email.setTextColor(Color.BLACK);
+*//*
 
             editProfile.setVisibility(View.VISIBLE);
             editProfile.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
         }
         bindMenu();
     }
+*/
 
     private void navigationMenuChanged(MenuItem menuItem) {
             openFragment(menuItem.getItemId());

@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private String hell(String name) {
         String s=name.split("@")[0];
-        String ss=s+" Posted ";
+        String ss=s;
         return ss;
 
     }

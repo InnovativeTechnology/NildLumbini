@@ -1,6 +1,9 @@
 package ourproject.nildlumbini;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,6 +22,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
+
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     final ArrayList<RetrieveData> doclist= new ArrayList<>();
+
+    TextView name;
+    CircleImageView image;
+    Button editProfile;
 
 
     TextView email;
@@ -111,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void initDrawerLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -149,10 +159,57 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
+
+        View header= navigationView.getHeaderView(0);
+
+        name= (TextView) header.findViewById(R.id.name);
+        email = (TextView) header.findViewById(R.id.email);
+        image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
+        editProfile = (Button)header.findViewById(R.id.buttonDrawer);
+
+        name.setText("I am suman");
+        name.setTextColor(Color.BLACK);
+        editProfile.setVisibility(View.INVISIBLE);
+
+        if(firebaseAuth.getCurrentUser() != null){
+            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+            email.setTextColor(Color.BLACK);
+
+            editProfile.setVisibility(View.VISIBLE);
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else {
+            Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(firebaseAuth.getCurrentUser() != null){
+            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+            email.setTextColor(Color.BLACK);
+
+            editProfile.setVisibility(View.VISIBLE);
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
+        }
+        bindMenu();
     }
 
     private void navigationMenuChanged(MenuItem menuItem) {
-         openFragment(menuItem.getItemId());
+            openFragment(menuItem.getItemId());
             menuItem.setChecked(true);
             drawerLayout.closeDrawers();
 
@@ -173,9 +230,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
            case R.id.logout1:
            {
-               firebaseAuth.signOut();
-               startActivity(new Intent(MainActivity.this,MainActivity.class));
-               finish();           }
+
+               onLogout();
+               //Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
+           }
                break;
 
             default:
@@ -183,6 +241,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         }
+
+    private void onLogout() {
+        AlertDialog.Builder alertbox = new AlertDialog.Builder(MainActivity.this);
+        alertbox.setTitle("Are you sure want to logout??");
+        alertbox.setCancelable(false);
+        alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                firebaseAuth.signOut();
+                startActivity(new Intent(MainActivity.this,MainActivity.class));
+                finish();
+            }
+        });
+        alertbox.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertbox.show();
+    }
+
     private void bindData() {
         bindMenu();
         database.child("UserFile").addValueEventListener(new ValueEventListener() {
@@ -209,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
                            String Date = note.child("Date").getValue().toString();
                            doclist.add(new RetrieveData(UserIds, name, option, title, article, imgUrl, Date));
                            t = true;
+
                        }
                    }catch (Exception e)
                    {

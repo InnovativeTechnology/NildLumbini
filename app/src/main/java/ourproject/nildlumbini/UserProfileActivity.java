@@ -1,5 +1,6 @@
 package ourproject.nildlumbini;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
     ImageView deletePost;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
+
         userProfileAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,11 +72,24 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    public static void onPressStart(){
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
+        g.loadDataA();
+        g.setDataA();
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_pro,menu);
         return true;
-
     }
 
     @Override
@@ -109,4 +126,5 @@ public class UserProfileActivity extends AppCompatActivity {
         });
         alertbox.show();
     }
+
 }

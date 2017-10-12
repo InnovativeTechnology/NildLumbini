@@ -68,11 +68,14 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         activityName = "";
     }
 
+    UserProfileActivity profileActivity;
     public Item_Adap(List<RetrieveData> retrieves, Context context, String option,String t) {
         this.retrieve=retrieves;
         this.context =context;
         this.activityName = option;
         this.t= t;
+
+        profileActivity = (UserProfileActivity) context;
     }
 
     public Item_Adap.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -129,6 +132,9 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(context,retrieve1.userIds.toString(),Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+
+                            //TODO restart User Profile activity
+                            profileActivity.onRestart();
                         }
                     });
                 }

@@ -25,6 +25,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import ourproject.nildlumbini.Fragment.GetDataForFragments;
+
 
 public class DiaLog_Add extends AppCompatActivity {
     EditText title,article;
@@ -106,26 +108,29 @@ catch (Exception e)
                     });
 
 
-                }
-                else {
-                    addChild(firebaseDatabase.push(), progressDialog);
+                    }
+                    else {
+                        addChild(firebaseDatabase.push(), progressDialog);
 
 
+                    }
+                }
+                else
+                {
+                    Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
                 }
             }
-            else
-            {
-                Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
-            }}
+
+
         });
-        mselectImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, GALARY_FIELD);
-            }
-        });
+            mselectImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryIntent.setType("image/*");
+                    startActivityForResult(galleryIntent, GALARY_FIELD);
+                }
+            });
 
 
     }
@@ -151,6 +156,8 @@ catch (Exception e)
         finish();
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -173,5 +180,11 @@ catch (Exception e)
         }
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(getApplicationContext(),"dsbnv",Toast.LENGTH_SHORT).show();
     }
 }

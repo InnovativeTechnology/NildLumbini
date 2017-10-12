@@ -168,8 +168,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     @Override

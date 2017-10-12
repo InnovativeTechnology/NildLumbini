@@ -57,6 +57,7 @@ import static android.content.ContentValues.TAG;
 
 public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 {
+    private static final int GALARY_FIELD = 1;
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
     public static String activityName;
@@ -148,6 +149,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         }
 
     }
+
 
     @Override
     public int getItemCount() {

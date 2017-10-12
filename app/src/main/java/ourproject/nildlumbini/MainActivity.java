@@ -1,9 +1,15 @@
 package ourproject.nildlumbini;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,6 +23,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,12 +42,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static final int GALARY_FIELD = 111;
+    private static final String SHARED_PREF_NAME = "";
     NavigationView navigationView;
     ProgressDialog progressDialog;
     Toolbar toolbar;
@@ -61,10 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     TextView email;
+
+     Uri mImage = null;
+    static MainActivity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        activity = this;
+
         database.keepSynced(true);
         initUtils();
         initUI();
@@ -114,9 +132,19 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
+                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryIntent.setType("image/*");
+                    startActivityForResult(galleryIntent, GALARY_FIELD);
                 }
             });
 
+            String s = getProfile();
+            if(s !="" || !s.equals(null)) {
+                byte[] img = Base64.decode(s.getBytes(), 1);
+                image.setImageBitmap(BitmapFactory.decodeByteArray(img, 0, img.length));
+            }else {
+
+            }
         }else {
             Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
         }
@@ -174,54 +202,85 @@ public class MainActivity extends AppCompatActivity {
                     });
         }
 
-        View header= navigationView.getHeaderView(0);
-
-        email = (TextView) header.findViewById(R.id.email);
-        image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
-        editProfile = (Button)header.findViewById(R.id.buttonDrawer);
-
-           editProfile.setVisibility(View.INVISIBLE);
-
-        if(firebaseAuth.getCurrentUser() != null){
-            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
-            email.setTextColor(Color.BLACK);
-
-            editProfile.setVisibility(View.VISIBLE);
-            editProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }else {
-            //Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
-        }
+//        View header= navigationView.getHeaderView(0);
+//
+//        email = (TextView) header.findViewById(R.id.email);
+//        image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
+//        editProfile = (Button)header.findViewById(R.id.buttonDrawer);
+//
+//        editProfile.setVisibility(View.INVISIBLE);
+//
+//        if(firebaseAuth.getCurrentUser() != null){
+//            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+//            email.setTextColor(Color.BLACK);
+//
+//            editProfile.setVisibility(View.VISIBLE);
+//            editProfile.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
+//                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//                    galleryIntent.setType("image/*");
+//                    startActivityForResult(galleryIntent, GALARY_FIELD);
+//                }
+//            });
+//
+//        }else {
+//            //Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
+//        }
     }
 
-/*
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        if(firebaseAuth.getCurrentUser() != null){
-           */
-/* email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
-            email.setTextColor(Color.BLACK);
-*//*
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALARY_FIELD && resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
+                mImage = data.getData();
+                //image.setImageURI(mImage);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImage);
+                    //use the bitmap as you like
+                    image.setImageBitmap(bitmap);
+                    storeProfile(bitmap);
 
-            editProfile.setVisibility(View.VISIBLE);
-            editProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
-        }else {
-            Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
+            }
+
         }
-        bindMenu();
     }
-*/
+
+    public boolean storeProfile(Bitmap s) {  //InputStream s
+        SharedPreferences sharedPreferences= getApplicationContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        if(s!=null){
+            Bitmap myBit= s;//BitmapFactory.decodeStream(s);
+            ByteArrayOutputStream baos= new ByteArrayOutputStream();
+            myBit.compress(Bitmap.CompressFormat.PNG,100,baos);
+            byte[] b=baos.toByteArray();
+            String encoded= Base64.encodeToString(b,Base64.DEFAULT);
+            editor.putString("PROFILE_IMG",encoded);
+        }
+        else {
+            editor.putString("PROFILE_IMG","");
+        }
+        editor.apply();
+
+        return true;
+    }
+    public  String getProfile()
+    {
+        String s = "";
+        try {
+             SharedPreferences sharedPreferences= getApplicationContext().getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+             s = sharedPreferences.getString("PROFILE_IMG", "");
+        }catch (Exception e){
+            s ="";
+        }
+        return s;
+    }
 
     private void navigationMenuChanged(MenuItem menuItem) {
             openFragment(menuItem.getItemId());

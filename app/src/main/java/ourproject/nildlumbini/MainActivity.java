@@ -364,6 +364,7 @@ public class MainActivity extends AppCompatActivity {
                            String Date = note.child("Date").getValue().toString();
                            doclist.add(new RetrieveData(UserIds, name, option, title, article, imgUrl, Date));
                            t = true;
+                           progressDialog.dismiss();
 
                        }
                    }catch (Exception e)

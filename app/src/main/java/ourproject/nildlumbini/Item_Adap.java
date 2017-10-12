@@ -66,11 +66,14 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         activityName = "";
     }
 
+    UserProfileActivity profileActivity;
     public Item_Adap(List<RetrieveData> retrieves, Context context, String option,String t) {
         this.retrieve=retrieves;
         this.context =context;
         this.activityName = option;
         this.t= t;
+
+        profileActivity = (UserProfileActivity) context;
     }
 
     public Item_Adap.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -91,8 +94,13 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         holder.date.setText(retrieve1.date);
         holder.title.setText(retrieve1.title);
         holder.article.setText(retrieve1.article);
-        Picasso.with(context).load(retrieve1.imgUrl).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
-
+        String url= retrieve1.imgUrl;
+        try {
+            Picasso.with(context).load(url).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         if(activityName == "userProfile"){
 
 
@@ -125,6 +133,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                             Toast.makeText(context,retrieve1.userIds.toString(),Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
 
+                            profileActivity.onRestart();
                         }
                     });
                 }

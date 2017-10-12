@@ -63,6 +63,10 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    public static void onPressStart(){
+
+    }
+
     @Override
     protected void onRestart() {
         super.onRestart();

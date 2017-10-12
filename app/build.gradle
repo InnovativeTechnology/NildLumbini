@@ -40,7 +40,7 @@ dependencies {
     compile 'com.nightonke:boommenu:1.0.9'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
-    //compile 'com.theartofdev.edmodo:android-image-cropper:2.3.+'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.3.+'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

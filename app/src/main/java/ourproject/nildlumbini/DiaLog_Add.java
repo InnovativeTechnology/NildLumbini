@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,13 +35,18 @@ import com.squareup.picasso.Picasso;
 import ourproject.nildlumbini.Fragment.GetDataForFragments;
 
 
+
 public class DiaLog_Add extends AppCompatActivity {
     EditText title,article;
     Button add;
     Spinner option;
 
+   TextView close;
+
+
 
     String title1="",option1="",article1="",imgUrl1="";
+
     StorageReference sReference;
     private ImageButton mselectImage;
 
@@ -73,6 +79,7 @@ public class DiaLog_Add extends AppCompatActivity {
 
         final String[] opt = this.getResources().getStringArray(R.array.option);
         mselectImage = (ImageButton)findViewById(R.id.selectImage);
+        close = (TextView)findViewById(R.id.closePopup);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line,opt);
         option.setAdapter(adapter);
@@ -139,9 +146,7 @@ public class DiaLog_Add extends AppCompatActivity {
                     Toast.makeText(DiaLog_Add.this,"Please Input Valid Information..",Toast.LENGTH_SHORT).show();
                 }
             }
-
-
-        });
+  });
             mselectImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -259,9 +264,21 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DiaLog_Add.this,UserProfileActivity.class));
+                finish();
+            }
+        });
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Toast.makeText(getApplicationContext(),"",Toast.LENGTH_SHORT).show();
+
     }
 }

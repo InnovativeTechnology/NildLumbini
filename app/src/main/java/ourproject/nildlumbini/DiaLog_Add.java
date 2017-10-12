@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,8 +15,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
@@ -23,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,12 +37,14 @@ public class DiaLog_Add extends AppCompatActivity {
     Button add;
     Spinner option;
 
+
+    String title1="",option1="",article1="",imgUrl1="";
     StorageReference sReference;
     private ImageButton mselectImage;
 
     private Uri mImage = null;
     private static final int GALARY_FIELD = 1;
-
+    String[] message;
 
     DatabaseReference firebaseDatabase;
 
@@ -47,70 +53,78 @@ public class DiaLog_Add extends AppCompatActivity {
 
     Uri downloadUri;
 
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_layout);
-        option = (Spinner) findViewById(R.id.option);
+
+        option= (Spinner) findViewById(R.id.option);
+
+        try {
+            title = (EditText) findViewById(R.id.title1);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        article= (EditText) findViewById(R.id.article);
+        add= (Button) findViewById(R.id.addButton);
+
         final String[] opt = this.getResources().getStringArray(R.array.option);
         mselectImage = (ImageButton) findViewById(R.id.selectImage);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line, opt);
         option.setAdapter(adapter);
-        Timestamp = ExtractDateTime.getDate();
+
+        Timestamp= ExtractDateTime.getDate();
+        bundle= getIntent().getExtras();
+        if(bundle!=null) {
+          //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
+           message= bundle.getStringArray("message");
+            option.setSelection(getIndex(option, message[1]));
+
+            article.setText(message[2]);
+            title.setText(message[0]);
+            try {
+                Picasso.with(DiaLog_Add.this).load(message[3]).resize(200, Display.DEFAULT_DISPLAY).into(mselectImage);
+
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+
 
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile")/*.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"")*/;
         // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
 
 
         sReference = FirebaseStorage.getInstance().getReference();
-
-        try {
-            title = (EditText) findViewById(R.id.title1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        article = (EditText) findViewById(R.id.article);
-        add = (Button) findViewById(R.id.addButton);
-        add.setOnClickListener(new View.OnClickListener() {
+      add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(DiaLog_Add.this);
+            public void onClick(View v)      {
+                //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
+
+                final ProgressDialog progressDialog= new ProgressDialog(DiaLog_Add.this);
 
                 if (valid()) {
                     progressDialog.setTitle("uploading..");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-
-                    final DatabaseReference newPost = firebaseDatabase.push();
-                    if (mImage != null) {
-                        StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
-                        filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                downloadUri = taskSnapshot.getDownloadUrl();
-                                DatabaseReference newPost = firebaseDatabase.push();
-                                //  DatabaseReference newPost1 = firebaseDatabase1;
-                                addChild(newPost, progressDialog, downloadUri.toString());
-                                Map<String, String> map = new HashMap<String, String>();
-                                map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                map.put("option", option.getSelectedItem().toString());
-                                map.put("title", title.getText().toString());
-                                map.put("article", article.getText().toString());
-                                map.put("imgUrl", downloadUri.toString());
-                                map.put("Date", Timestamp);
-                                //  newPost1.push().setValue(map);
-/*
-                            startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
-                            finish();*/
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(DiaLog_Add.this, "Connection Problem, Try again", Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
+                    if(mImage!=null) {
+                        if(bundle!=null) {
+                            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                            database.child("UserFile").child(message[4]).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    UploadNewFile(progressDialog);
+                                }
+                            });
+                        }
+                        else
+                            UploadNewFile(progressDialog);
 
 
                     } else {
@@ -134,6 +148,63 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     }
+
+    private void UploadNewFile(final ProgressDialog progressDialog) {
+        {
+            if(mImage!=null) {
+
+                StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
+                filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        downloadUri = taskSnapshot.getDownloadUrl();
+                        DatabaseReference newPost = firebaseDatabase.push();
+                        //  DatabaseReference newPost1 = firebaseDatabase1;
+                        addChild(newPost, progressDialog, downloadUri.toString());
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        map.put("option", option.getSelectedItem().toString());
+                        map.put("title", title.getText().toString());
+                        map.put("article", article.getText().toString());
+                        map.put("imgUrl", downloadUri.toString());
+                        map.put("Date", Timestamp);
+                        //  newPost1.push().setValue(map);
+/*
+                            startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
+                            finish();*/
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DiaLog_Add.this, "Connection Problem, Try again", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+            else
+            {
+                addChild(firebaseDatabase.push(), progressDialog,"");
+
+            }
+        }
+    }
+
+    private void deletePreViousBranch() {
+
+    }
+
+    private int getIndex(Spinner option, String s) {
+        int index = 0;
+
+        for (int i=0;i<option.getCount();i++){
+            if (option.getItemAtPosition(i).toString().equalsIgnoreCase(s)){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
 
     private boolean valid() {
         Boolean t = true;

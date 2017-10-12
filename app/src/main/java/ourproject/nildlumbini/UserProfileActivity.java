@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -75,9 +76,15 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
-        g.loadDataA();
-        g.setDataA();
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
+                g.loadDataA();
+                g.setDataA();
+            }
+        },2000);
     }
 
 

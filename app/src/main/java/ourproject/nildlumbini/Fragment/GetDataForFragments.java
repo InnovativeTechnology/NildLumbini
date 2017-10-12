@@ -1,24 +1,14 @@
 package ourproject.nildlumbini.Fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import ourproject.nildlumbini.Item_Adap;
-import ourproject.nildlumbini.MainActivity;
 import ourproject.nildlumbini.MyList;
 import ourproject.nildlumbini.RetrieveData;
-import ourproject.nildlumbini.UserProfileActivity;
 
 /**
  * Created by suman on 10/8/2017.
@@ -52,7 +42,7 @@ public class GetDataForFragments {
         {
             if(r.option.equals(option))
             {
-                arrayList.add(new RetrieveData(r.name, option,r.title,r.article, r.imgUrl, r.date));
+                arrayList.add(new RetrieveData(r.userIds, r.name, option,r.title,r.article, r.imgUrl, r.date));
             }
         }
     }
@@ -73,7 +63,7 @@ public class GetDataForFragments {
             String ss= option.split("@")[0];
             if(s.equals(ss))
             {
-                arrayList.add(new RetrieveData(r.name, option,r.title,r.article, r.imgUrl, r.date));
+                arrayList.add(new RetrieveData(r.userIds, r.name, option,r.title,r.article, r.imgUrl, r.date));
             }
         }
     }

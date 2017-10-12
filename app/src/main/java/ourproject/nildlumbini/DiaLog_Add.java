@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -83,7 +85,7 @@ catch (Exception e)
                     progressDialog.setCancelable(false);
                     progressDialog.show();
 
-                    if(mImage!=null) {
+                    if(mImage!=null || mselectImage!=null) {
                     StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
                     filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -104,6 +106,11 @@ catch (Exception e)
 /*
                             startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
                             finish();*/
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_SHORT).show();
                         }
                     });
 

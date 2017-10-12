@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         progressDialog= new ProgressDialog(MainActivity.this);
         progressDialog.setTitle("refreshing..");
-
-
     }
 
     @Override
@@ -201,33 +199,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
-
-//        View header= navigationView.getHeaderView(0);
-//
-//        email = (TextView) header.findViewById(R.id.email);
-//        image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
-//        editProfile = (Button)header.findViewById(R.id.buttonDrawer);
-//
-//        editProfile.setVisibility(View.INVISIBLE);
-//
-//        if(firebaseAuth.getCurrentUser() != null){
-//            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
-//            email.setTextColor(Color.BLACK);
-//
-//            editProfile.setVisibility(View.VISIBLE);
-//            editProfile.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
-//                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                    galleryIntent.setType("image/*");
-//                    startActivityForResult(galleryIntent, GALARY_FIELD);
-//                }
-//            });
-//
-//        }else {
-//            //Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
-//        }
     }
 
     @Override
@@ -338,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
         alertbox.show();
     }
 
-    private void bindData() {
+    public void bindData() {
         bindMenu();
         database.child("UserFile").addValueEventListener(new ValueEventListener() {
             @Override

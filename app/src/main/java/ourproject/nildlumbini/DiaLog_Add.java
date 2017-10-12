@@ -226,6 +226,8 @@ public class DiaLog_Add extends AppCompatActivity {
         newPost.child("Date").setValue(Timestamp);
         progressDialog.dismiss();
 
+        //MainActivity.activity.onStart();
+
         Toast.makeText(getApplicationContext(),"Successfully update!!!",Toast.LENGTH_SHORT).show();
         finish();
     }

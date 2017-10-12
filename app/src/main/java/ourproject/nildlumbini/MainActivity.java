@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
     final ArrayList<RetrieveData> doclist= new ArrayList<>();
 
     TextView name;
-    TextView email;
     CircleImageView image;
     Button editProfile;
 
 
+    TextView email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +89,37 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         progressDialog= new ProgressDialog(MainActivity.this);
         progressDialog.setTitle("refreshing..");
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        View header= navigationView.getHeaderView(0);
+
+        email = (TextView) header.findViewById(R.id.email);
+        image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
+        editProfile = (Button)header.findViewById(R.id.buttonDrawer);
+
+        editProfile.setVisibility(View.INVISIBLE);
+
+        if(firebaseAuth.getCurrentUser() != null){
+            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+            email.setTextColor(Color.BLACK);
+
+            editProfile.setVisibility(View.VISIBLE);
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else {
+            Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -144,14 +176,11 @@ public class MainActivity extends AppCompatActivity {
 
         View header= navigationView.getHeaderView(0);
 
-        name= (TextView) header.findViewById(R.id.name);
         email = (TextView) header.findViewById(R.id.email);
         image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
         editProfile = (Button)header.findViewById(R.id.buttonDrawer);
 
-        name.setText("I am suman");
-        name.setTextColor(Color.BLACK);
-        editProfile.setVisibility(View.INVISIBLE);
+           editProfile.setVisibility(View.INVISIBLE);
 
         if(firebaseAuth.getCurrentUser() != null){
             email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
@@ -170,12 +199,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+/*
     @Override
     protected void onRestart() {
         super.onRestart();
         if(firebaseAuth.getCurrentUser() != null){
-            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
+           */
+/* email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
             email.setTextColor(Color.BLACK);
+*//*
 
             editProfile.setVisibility(View.VISIBLE);
             editProfile.setOnClickListener(new View.OnClickListener() {
@@ -189,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
         }
         bindMenu();
     }
+*/
 
     private void navigationMenuChanged(MenuItem menuItem) {
             openFragment(menuItem.getItemId());
@@ -212,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
            case R.id.logout1:
            {
+
                onLogout();
                //Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
            }

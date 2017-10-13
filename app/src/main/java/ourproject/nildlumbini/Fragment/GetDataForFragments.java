@@ -15,7 +15,7 @@ import ourproject.nildlumbini.RetrieveData;
  */
 
 public class GetDataForFragments {
-    FragmentActivity activity;
+    //FragmentActivity activity;
     String option;
     static RecyclerView myRecyle;
 
@@ -48,7 +48,7 @@ public class GetDataForFragments {
     }
 
     public void setData(){
-        myRecyle.setAdapter(new Item_Adap(arrayList, activity));
+        myRecyle.setAdapter(new Item_Adap(arrayList, activitya));
     }
 
     public void loadDataA(){

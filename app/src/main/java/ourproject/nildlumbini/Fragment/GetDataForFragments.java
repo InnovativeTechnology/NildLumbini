@@ -52,7 +52,7 @@ public class GetDataForFragments {
         {
             if(r.option.equals(option))
             {
-                arrayList.add(new RetrieveData(r.name, option,r.title,r.article, r.imgUrl, r.date));
+                arrayList.add(new RetrieveData(r.name, option,r.title,r.article, r.imgUrl, r.date, r.userIds));
             }
         }
     }
@@ -73,7 +73,7 @@ public class GetDataForFragments {
             String ss= option.split("@")[0];
             if(s.equals(ss))
             {
-                arrayList.add(new RetrieveData(r.name, r.option,r.title,r.article, r.imgUrl, r.date));
+                arrayList.add(new RetrieveData(r.name, r.option,r.title,r.article, r.imgUrl, r.date, r.userIds));
             }
         }
     }

@@ -39,7 +39,7 @@ public class DiaLog_Add extends AppCompatActivity {
     Button add;
     Spinner option;
 
-   TextView close;
+    TextView close;
 
 
 
@@ -89,9 +89,9 @@ public class DiaLog_Add extends AppCompatActivity {
         bundle= getIntent().getExtras();
         if(bundle!=null) {
           //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
-           message= bundle.getStringArray("message");
+            message= bundle.getStringArray("message");
             option.setSelection(getIndex(option, message[1]));
-
+            mImage = Uri.parse(message[3].toString());
             article.setText(message[2]);
             title.setText(message[0]);
             try {
@@ -118,8 +118,9 @@ public class DiaLog_Add extends AppCompatActivity {
                     progressDialog.show();
                     if(mImage!=null) {
                         if(bundle!=null) {
+                            String uids = message[4];
                             DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                            database.child("UserFile").child(message[4]).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            database.child("UserFile").child(uids).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     UploadNewFile(progressDialog);
@@ -151,8 +152,8 @@ public class DiaLog_Add extends AppCompatActivity {
     }
 
     private void UploadNewFile(final ProgressDialog progressDialog) {
-        {
-            if(mImage!=null) {
+        if(bundle==null) {
+            if (mImage != null) {
 
                 StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
                 filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -181,12 +182,12 @@ public class DiaLog_Add extends AppCompatActivity {
 
                     }
                 });
-            }
-            else
-            {
-                addChild(firebaseDatabase.push(), progressDialog,"");
+            } else {
+                addChild(firebaseDatabase.push(), progressDialog, "");
 
             }
+        }else {
+            addChild(firebaseDatabase.push(), progressDialog, mImage.toString());
         }
     }
 

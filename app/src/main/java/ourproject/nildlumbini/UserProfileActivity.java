@@ -84,7 +84,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 g.loadDataA();
                 g.setDataA();
             }
-        },2000);
+        },5000);
     }
 
 

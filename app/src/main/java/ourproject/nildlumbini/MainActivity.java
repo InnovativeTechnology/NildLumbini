@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                            String article = note.child("article").getValue().toString();
                            String imgUrl = note.child("imgUrl").getValue().toString();
                            String Date = note.child("Date").getValue().toString();
-                           doclist.add(new RetrieveData(name, option, title, article, imgUrl, Date));
+                           doclist.add(new RetrieveData(name, option, title, article, imgUrl, Date, UserIds));
                            t = true;
 
                        }

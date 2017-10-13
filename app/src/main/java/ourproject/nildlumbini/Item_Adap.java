@@ -114,7 +114,11 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "under construction",Toast.LENGTH_LONG).show();
-                context.startActivity(new Intent(context,FullDetailView.class));
+                Intent intent= new Intent(context,FullDetailView.class);
+                String[] bodyParts={retrieve1.title,retrieve1.article,retrieve1.name,retrieve1.option,retrieve1.date,retrieve1.imgUrl};
+                intent.putExtra("message",bodyParts);
+                context.startActivity(intent);
+                //context.startActivity(new Intent(context,FullDetailView.class));
             }
         });
 

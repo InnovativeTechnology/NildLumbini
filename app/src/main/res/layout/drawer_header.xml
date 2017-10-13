@@ -15,16 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="2dp">
+        android:padding="14dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="88dp"
-        android:layout_height="88dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_margin="5dp"
         android:padding="2dp"
         android:id="@+id/imageViewProfile"
         android:src="@drawable/images"
-       />
+        />
 
         <Button
             android:id="@+id/buttonDrawer"

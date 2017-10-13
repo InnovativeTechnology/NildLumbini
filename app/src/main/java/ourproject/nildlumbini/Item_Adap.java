@@ -58,7 +58,6 @@ import static android.content.ContentValues.TAG;
 
 public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 {
-    private static final int GALARY_FIELD = 1;
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
     public  String activityName;
@@ -67,6 +66,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     int i=0;
 
     public Item_Adap(List<RetrieveData> retrieves, Context context) {
+
         this.retrieve=retrieves;
         this.context =context;
         activityName = "";
@@ -101,7 +101,6 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         holder.date.setText(retrieve1.date);
         holder.title.setText(retrieve1.title);
         holder.article.setText(retrieve1.article);
-
         String url= retrieve1.imgUrl;
         try {
             Picasso.with(context).load(url).resize(200, Display.DEFAULT_DISPLAY).into(holder.img);
@@ -139,6 +138,12 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                     String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl,retrieve.get(position).userIds.toString()};
                     intent.putExtra("message",bodyParts);
                     context.startActivity(intent);
+
+
+
+
+
+
                 }
             });
 
@@ -147,37 +152,33 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(new NetworkConnection(context).isNetworkConnection()) {
-                        final ProgressDialog dialog = new ProgressDialog(context);
-                        dialog.setMessage("Deleting....");
-                        dialog.show();
+                    final ProgressDialog dialog = new ProgressDialog(context);
+                    dialog.setMessage("Deleting....");
+                    dialog.show();
 
-                        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                        database.child("UserFile").child(retrieve.get(position).userIds).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(context, retrieve1.userIds.toString(), Toast.LENGTH_SHORT).show();
+                    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                    database.child("UserFile").child(retrieve.get(position).userIds).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(context,retrieve1.userIds.toString(),Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
 
                             //TODO restart User Profile activity
                             profileActivity.onRestart();
-                            }
-                        });
-                    }else {
-                        Toast.makeText(context, "There is no network connection", Toast.LENGTH_SHORT).show();
-                    }
+                        }
+                    });
                 }
             });
         }
 
     }
 
-
     @Override
     public int getItemCount() {
         i = retrieve.size();
         return i;
     }
+
     public  class ViewHolder extends  RecyclerView.ViewHolder {
         RelativeLayout postViewAllRelativeLayout;
         TextView name,option,date,title;

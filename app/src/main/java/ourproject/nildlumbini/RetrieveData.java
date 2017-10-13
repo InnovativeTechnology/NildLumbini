@@ -8,17 +8,17 @@ import java.io.Serializable;
 
 public class RetrieveData implements Serializable {
     //
-
+    public  String userIds;
    public String name;
     public String option;
     public String title;
     public String date;
     public String article;
     public String imgUrl;
-    public String userIds;
 
     public RetrieveData()
     {}
+
     public RetrieveData(String name,String option, String title,String article,String imgUrl,String Date, String uids)
     {
         this.userIds = uids;

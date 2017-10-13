@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="1dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/user_profile">
 
@@ -22,14 +22,14 @@
             android:layout_margin="5dp"
             >
 
-            <Button
+           <!-- <Button
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:id="@+id/user_profile_add_button"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:text="New +"
-                android:padding="10dp"/>
+                android:padding="10dp"/>-->
 
 
             <android.support.v7.widget.RecyclerView
@@ -37,7 +37,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:id="@+id/user_profile_recycler">
-
             </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>

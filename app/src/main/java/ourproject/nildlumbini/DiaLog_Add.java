@@ -88,7 +88,7 @@ public class DiaLog_Add extends AppCompatActivity {
         Timestamp= ExtractDateTime.getDate();
         bundle= getIntent().getExtras();
         if(bundle!=null) {
-          //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
+            //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
             message= bundle.getStringArray("message");
             option.setSelection(getIndex(option, message[1]));
             mImage = Uri.parse(message[3].toString());
@@ -138,15 +138,15 @@ public class DiaLog_Add extends AppCompatActivity {
                     Toast.makeText(DiaLog_Add.this, "Please Input Valid Information..", Toast.LENGTH_SHORT).show();
                 }
             }
-         });
-            mselectImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    galleryIntent.setType("image/*");
-                    startActivityForResult(galleryIntent, GALARY_FIELD);
-                }
-            });
+        });
+        mselectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, GALARY_FIELD);
+            }
+        });
 
 
     }

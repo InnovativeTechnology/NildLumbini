@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView email;
 
-     Uri mImage = null;
+    Uri mImage = null;
     static MainActivity mainActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,8 +245,8 @@ public class MainActivity extends AppCompatActivity {
     {
         String s = "";
         try {
-             SharedPreferences sharedPreferences= getApplicationContext().getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
-             s = sharedPreferences.getString("PROFILE_IMG", "");
+            SharedPreferences sharedPreferences= getApplicationContext().getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+            s = sharedPreferences.getString("PROFILE_IMG", "");
         }catch (Exception e){
             s ="";
         }
@@ -254,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void navigationMenuChanged(MenuItem menuItem) {
-            openFragment(menuItem.getItemId());
-            menuItem.setChecked(true);
-            drawerLayout.closeDrawers();
+        openFragment(menuItem.getItemId());
+        menuItem.setChecked(true);
+        drawerLayout.closeDrawers();
 
     }
     public void openFragment(int menuId) {
@@ -268,24 +268,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
 
-                break;
+            break;
             case R.id.check:
             case R.id.check1:
                 startActivity(new Intent(MainActivity.this,MainActivityCheck.class));
                 break;
-           case R.id.logout1:
-           {
+            case R.id.logout1:
+            {
 
-               onLogout();
-               //Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
-           }
-               break;
+                onLogout();
+                //Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
+            }
+            break;
 
             default:
                 break;
         }
 
-        }
+    }
 
     private void onLogout() {
         AlertDialog.Builder alertbox = new AlertDialog.Builder(MainActivity.this);
@@ -319,31 +319,31 @@ public class MainActivity extends AppCompatActivity {
                 final ArrayList<RetrieveData> doclist= new ArrayList<>();
                 for(DataSnapshot note :dataSnapshot.getChildren())
                 {
-                   try {
-                       if (note.getChildrenCount() > 0) {
+                    try {
+                        if (note.getChildrenCount() > 0) {
 
-                           //keys = keys + "\n " + note.getKey();
-                           String UserIds = note.getKey();
-                           String na = note.child("name").getValue().toString();
-                           String name =hell(na);
-                           String option = note.child("option").getValue().toString();
-                           String title = note.child("title").getValue().toString();
-                           String article = note.child("article").getValue().toString();
-                           String imgUrl = note.child("imgUrl").getValue().toString();
-                           String Date = note.child("Date").getValue().toString();
-                           doclist.add(new RetrieveData(name, option, title, article, imgUrl, Date, UserIds));
-                           t = true;
+                            //keys = keys + "\n " + note.getKey();
+                            String UserIds = note.getKey();
+                            String na = note.child("name").getValue().toString();
+                            String name =hell(na);
+                            String option = note.child("option").getValue().toString();
+                            String title = note.child("title").getValue().toString();
+                            String article = note.child("article").getValue().toString();
+                            String imgUrl = note.child("imgUrl").getValue().toString();
+                            String Date = note.child("Date").getValue().toString();
+                            doclist.add(new RetrieveData(name, option, title, article, imgUrl, Date, UserIds));
+                            t = true;
 
-                       }
-                   }catch (Exception e)
-                   {
-                       if(t == true) {
-                           new MyList(doclist);
-                           myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
-                           progressDialog.dismiss();
+                        }
+                    }catch (Exception e)
+                    {
+                        if(t == true) {
+                            new MyList(doclist);
+                            myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
+                            progressDialog.dismiss();
 
-                       }
-                   }
+                        }
+                    }
                 }
                 if(t == true) {
                     new MyList(doclist);

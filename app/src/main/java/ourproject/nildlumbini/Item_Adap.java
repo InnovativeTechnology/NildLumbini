@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,11 +60,13 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 {
     Context context;
     List<RetrieveData> retrieve = new ArrayList<>();
-    public static String activityName;
-    public static String t="";
-    //dsf;lks
-    public Item_Adap(List<RetrieveData> retrieves, Context context)
-    {
+    public  String activityName;
+    public  String t="";
+
+    int i=0;
+
+    public Item_Adap(List<RetrieveData> retrieves, Context context) {
+
         this.retrieve=retrieves;
         this.context =context;
         activityName = "";
@@ -92,7 +95,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
     @Override
 
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final RetrieveData retrieve1 = retrieve.get(position);
+        final RetrieveData retrieve1 = retrieve.get(position);//(i-position-1);
         holder.name.setText(retrieve1.name);
         holder.option.setText(retrieve1.option);
         holder.date.setText(retrieve1.date);
@@ -105,8 +108,16 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         {
             e.printStackTrace();
         }
-        if(activityName == "userProfile"){
 
+        holder.postViewAllRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "under construction",Toast.LENGTH_LONG).show();
+                context.startActivity(new Intent(context,FullDetailView.class));
+            }
+        });
+
+        if(activityName == "userProfile"){
 
             holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -119,8 +130,8 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             holder.edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent= new Intent(profileActivity,DiaLog_Add.class);
-                    String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl,retrieve.get(position).userIds};
+                    Intent intent= new Intent(profileActivity,UpdatePost.class);
+                    String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl,retrieve.get(position).userIds.toString()};
                     intent.putExtra("message",bodyParts);
                     context.startActivity(intent);
 
@@ -160,9 +171,12 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return retrieve.size();
+        i = retrieve.size();
+        return i;
     }
-    public static class ViewHolder extends  RecyclerView.ViewHolder {
+
+    public  class ViewHolder extends  RecyclerView.ViewHolder {
+        RelativeLayout postViewAllRelativeLayout;
         TextView name,option,date,title;
         TextView article ;
         ImageView img;
@@ -174,6 +188,7 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
         public ViewHolder(View itemView) {
             super(itemView);
 
+            postViewAllRelativeLayout = (RelativeLayout)itemView.findViewById(R.id.www);
             article= (TextView) itemView.findViewById(R.id.article);
             name= (TextView) itemView.findViewById(R.id.name);
             option= (TextView) itemView.findViewById(R.id.option);

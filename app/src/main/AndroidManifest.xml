@@ -7,12 +7,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".NildLumbini"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".NildLumbini"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -21,12 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserProfileActivity" />
         <activity
             android:name=".DiaLog_Add"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".UserProfileActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivityCheck"></activity>
+        <activity android:name=".MainActivityCheck" />
+        <activity android:name=".FullDetailView"
+            android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge"/>
+        <activity
+            android:name=".UpdatePost"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
     </application>
 
 </manifest>

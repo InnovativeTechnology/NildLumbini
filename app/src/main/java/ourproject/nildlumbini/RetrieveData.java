@@ -18,9 +18,10 @@ public class RetrieveData implements Serializable {
 
     public RetrieveData()
     {}
-    public RetrieveData(String userIds, String name, String option, String title, String article, String imgUrl, String Date)
+
+    public RetrieveData(String name,String option, String title,String article,String imgUrl,String Date, String uids)
     {
-        this.userIds = userIds;
+        this.userIds = uids;
         this.name= name;
         this.option= option;
         this.title= title;

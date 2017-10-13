@@ -1,5 +1,6 @@
 package ourproject.nildlumbini;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +15,9 @@ public class NetworkConnection {
          c=context;
      }
     public boolean isNetworkConnection(){
+//        ProgressDialog dialog = new ProgressDialog(c);
+//        dialog.setMessage("Plz wait...");
+//        dialog.show();
         ConnectivityManager manager = (ConnectivityManager) c.getSystemService(c.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
@@ -21,6 +25,7 @@ public class NetworkConnection {
         if (networkInfo != null && networkInfo.isConnected()) {
             isAvailable = true;
         }
+        //dialog.dismiss();
         return isAvailable;
      }
 }

@@ -100,30 +100,30 @@ public class UpdatePost extends AppCompatActivity {
             }
 
         }
-
-        if(new NetworkConnection(getApplicationContext()).isNetworkConnection()) {
-            firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile");
-            sReference = FirebaseStorage.getInstance().getReference();
-            add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    uids = message[4];
-                    if (mImage != null) {
-                        if (bundle != null) {
-                            img = message[3];
-                            //atFirstDeleteNode();
-                            updateNode(img);
-                        }
-                    } else {
-                        img = "";
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if(new NetworkConnection(getApplicationContext()).isNetworkConnection()) {
+                firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile");
+                sReference = FirebaseStorage.getInstance().getReference();
+                uids = message[4];
+                if (mImage != null) {
+                    if (bundle != null) {
+                        img = message[3];
                         //atFirstDeleteNode();
                         updateNode(img);
                     }
+                } else {
+                    img = "";
+                    //atFirstDeleteNode();
+                    updateNode(img);
                 }
-            });
-        }else {
-            Toast.makeText(getApplicationContext(),"There is no network connection.",Toast.LENGTH_SHORT).show();
-        }
+            }else {
+                Toast.makeText(getApplicationContext(),"There is no network connection.",Toast.LENGTH_SHORT).show();
+            }
+            }
+        });
+
 
     }
 

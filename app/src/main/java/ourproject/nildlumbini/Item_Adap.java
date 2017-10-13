@@ -138,12 +138,6 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
                     String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl,retrieve.get(position).userIds.toString()};
                     intent.putExtra("message",bodyParts);
                     context.startActivity(intent);
-
-
-
-
-
-
                 }
             });
 
@@ -152,21 +146,25 @@ public class Item_Adap extends RecyclerView.Adapter<Item_Adap.ViewHolder>
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final ProgressDialog dialog = new ProgressDialog(context);
-                    dialog.setMessage("Deleting....");
-                    dialog.show();
+                    if(new NetworkConnection(context).isNetworkConnection()) {
+                        final ProgressDialog dialog = new ProgressDialog(context);
+                        dialog.setMessage("Deleting....");
+                        dialog.show();
 
-                    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                    database.child("UserFile").child(retrieve.get(position).userIds).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(context,retrieve1.userIds.toString(),Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                        database.child("UserFile").child(retrieve.get(position).userIds).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(context, retrieve1.userIds.toString(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
 
-                            //TODO restart User Profile activity
-                            profileActivity.onRestart();
-                        }
-                    });
+                                //TODO restart User Profile activity
+                                profileActivity.onRestart();
+                            }
+                        });
+                    }else {
+                        Toast.makeText(context, "There is no network connection.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

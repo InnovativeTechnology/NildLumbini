@@ -38,6 +38,7 @@
                 android:id="@+id/image2"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
+                android:adjustViewBounds="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true" />
             <TextView

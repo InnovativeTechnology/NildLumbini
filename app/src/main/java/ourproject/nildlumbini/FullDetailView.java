@@ -38,7 +38,7 @@ public class FullDetailView extends AppCompatActivity {
         fullDate.setText(object[4]);
 
         try {
-            Picasso.with(FullDetailView.this).load(object[5]).resize(WindowManager.LayoutParams.FLAG_FULLSCREEN,500).into(fullImage);
+            Picasso.with(FullDetailView.this).load(object[5]).resize(WindowManager.LayoutParams.FLAG_FULLSCREEN,Display.DEFAULT_DISPLAY).into(fullImage);
         }catch (Exception e){
             e.printStackTrace();
         }

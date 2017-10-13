@@ -67,25 +67,27 @@ public class LoginActivity extends AppCompatActivity {
 
         if (isValid) {
             final ProgressDialog p = ProgressDialog.show(LoginActivity.this, "Wait for a minute", "Waiting", true);
-            mauth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
+            if(new NetworkConnection(getApplicationContext()).isNetworkConnection()) {
+                mauth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            p.dismiss();
+                        p.dismiss();
 
-                            if (task.isSuccessful()) {
-                                Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(), "login  is not  sucessful", Toast.LENGTH_SHORT).show();
-                            }
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "login  is not  sucessful", Toast.LENGTH_SHORT).show();
+                        }
 
                         }
                     });
+            }else {
+                Toast.makeText(getApplicationContext(), "There is no network connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

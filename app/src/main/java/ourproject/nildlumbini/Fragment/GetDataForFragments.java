@@ -42,7 +42,6 @@ public class GetDataForFragments {
         {
             if(r.option.equals(option))
             {
-
                 arrayList.add(new RetrieveData(r.name, option,r.title,r.article, r.imgUrl, r.date, r.userIds));
             }
         }
@@ -50,7 +49,6 @@ public class GetDataForFragments {
 
     public void setData(){
         myRecyle.setAdapter(new Item_Adap(arrayList, activity));
-
     }
 
     public void loadDataA(){

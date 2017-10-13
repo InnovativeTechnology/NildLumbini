@@ -60,6 +60,7 @@ public class DiaLog_Add extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_layout);
+        close= (TextView) findViewById(R.id.closePopup);
         option= (Spinner) findViewById(R.id.option);
 
         try {

@@ -54,9 +54,13 @@ public class FragmentTwo extends Fragment {
         myRecyle.setLayoutManager(layoutManager);
         myRecyle.setItemAnimator(new DefaultItemAnimator());
 
-        GetDataForFragments g =  new GetDataForFragments(getActivity(), option, myRecyle,"p");
-        g.loadData();
-        g.setData();
+        try {
+            GetDataForFragments g = new GetDataForFragments(getActivity(), option, myRecyle, "p");
+            g.loadData();
+            g.setData();
+        }catch (Exception e){
+            Toast.makeText(getContext().getApplicationContext(),"Crashed", Toast.LENGTH_SHORT).show();
+        }
 
         return  view;
 

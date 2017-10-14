@@ -74,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
     TextView email;
 
-     Uri mImage = null;
-    static MainActivity activity;
+    Uri mImage = null;
+    static MainActivity mainActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        activity = this;
+        mainActivity = this;
 
         database.keepSynced(true);
         initUtils();
@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         progressDialog= new ProgressDialog(MainActivity.this);
         progressDialog.setTitle("refreshing..");
-
-
     }
 
     @Override
@@ -201,33 +199,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
-
-//        View header= navigationView.getHeaderView(0);
-//
-//        email = (TextView) header.findViewById(R.id.email);
-//        image = (CircleImageView)header.findViewById(R.id.imageViewProfile);
-//        editProfile = (Button)header.findViewById(R.id.buttonDrawer);
-//
-//        editProfile.setVisibility(View.INVISIBLE);
-//
-//        if(firebaseAuth.getCurrentUser() != null){
-//            email.setText(firebaseAuth.getCurrentUser().getEmail().toString());
-//            email.setTextColor(Color.BLACK);
-//
-//            editProfile.setVisibility(View.VISIBLE);
-//            editProfile.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //Toast.makeText(getApplicationContext(), "Still on Contruction",Toast.LENGTH_SHORT).show();
-//                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                    galleryIntent.setType("image/*");
-//                    startActivityForResult(galleryIntent, GALARY_FIELD);
-//                }
-//            });
-//
-//        }else {
-//            //Toast.makeText(getApplicationContext(), "Plz login to set user profile",Toast.LENGTH_SHORT).show();
-//        }
     }
 
     @Override
@@ -274,8 +245,8 @@ public class MainActivity extends AppCompatActivity {
     {
         String s = "";
         try {
-             SharedPreferences sharedPreferences= getApplicationContext().getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
-             s = sharedPreferences.getString("PROFILE_IMG", "");
+            SharedPreferences sharedPreferences= getApplicationContext().getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+            s = sharedPreferences.getString("PROFILE_IMG", "");
         }catch (Exception e){
             s ="";
         }
@@ -283,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void navigationMenuChanged(MenuItem menuItem) {
-            openFragment(menuItem.getItemId());
-            menuItem.setChecked(true);
-            drawerLayout.closeDrawers();
+        openFragment(menuItem.getItemId());
+        menuItem.setChecked(true);
+        drawerLayout.closeDrawers();
 
     }
     public void openFragment(int menuId) {
@@ -297,24 +268,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
 
-                break;
+            break;
             case R.id.check:
             case R.id.check1:
                 startActivity(new Intent(MainActivity.this,MainActivityCheck.class));
                 break;
-           case R.id.logout1:
-           {
+            case R.id.logout1:
+            {
 
-               onLogout();
-               //Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
-           }
-               break;
+                onLogout();
+                //Toast.makeText(MainActivity.this,"Sign out perform",Toast.LENGTH_SHORT).show();
+            }
+            break;
 
             default:
                 break;
         }
 
-        }
+    }
 
     private void onLogout() {
         AlertDialog.Builder alertbox = new AlertDialog.Builder(MainActivity.this);
@@ -338,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
         alertbox.show();
     }
 
-    private void bindData() {
+    public void bindData() {
         bindMenu();
         database.child("UserFile").addValueEventListener(new ValueEventListener() {
             @Override
@@ -346,38 +317,34 @@ public class MainActivity extends AppCompatActivity {
                 boolean t = false;
                 //if(dataSnapshot.hasChild())
                 final ArrayList<RetrieveData> doclist= new ArrayList<>();
-                String keys = "";
                 for(DataSnapshot note :dataSnapshot.getChildren())
                 {
-                   try {
-                       if (note.getChildrenCount() > 0) {
+                    try {
+                        if (note.getChildrenCount() > 0) {
 
-                           keys = keys +"\n "+ note.getKey();
-                           String UserIds = note.getKey();
-                           String na = note.child("name").getValue().toString();
-                           String name =hell(na);
+                            //keys = keys + "\n " + note.getKey();
+                            String UserIds = note.getKey();
+                            String na = note.child("name").getValue().toString();
+                            String name =hell(na);
+                            String option = note.child("option").getValue().toString();
+                            String title = note.child("title").getValue().toString();
+                            String article = note.child("article").getValue().toString();
+                            String imgUrl = note.child("imgUrl").getValue().toString();
+                            String Date = note.child("Date").getValue().toString();
+                            doclist.add(new RetrieveData(name, option, title, article, imgUrl, Date, UserIds));
+                            t = true;
 
-                           String option = note.child("option").getValue().toString();
-                           String title = note.child("title").getValue().toString();
-                           String article = note.child("article").getValue().toString();
-                           String imgUrl = note.child("imgUrl").getValue().toString();
-                           String Date = note.child("Date").getValue().toString();
-                           doclist.add(new RetrieveData(UserIds, name, option, title, article, imgUrl, Date));
-                           t = true;
-                           progressDialog.dismiss();
+                        }
+                    }catch (Exception e)
+                    {
+                        if(t == true) {
+                            new MyList(doclist);
+                            myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
+                            progressDialog.dismiss();
 
-                       }
-                   }catch (Exception e)
-                   {
-                       if(t == true) {
-                           new MyList(doclist);
-                           myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
-                           progressDialog.dismiss();
-
-                       }
-                   }
+                        }
+                    }
                 }
-                //Toast.makeText(getApplicationContext(),keys,Toast.LENGTH_LONG).show();
                 if(t == true) {
                     new MyList(doclist);
                     myRecyle.setAdapter(new Item_Adap(doclist, MainActivity.this));
@@ -397,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String hell(String name) {
         String s=name.split("@")[0];
-        String ss=s+" Posted ";
+        String ss="- "+s;
         return ss;
 
     }

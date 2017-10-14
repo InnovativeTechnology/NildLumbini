@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,13 +33,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+
 public class DiaLog_Add extends AppCompatActivity {
     EditText title, article;
     Button add;
     Spinner option;
 
+    TextView close;
+
+
 
     String title1="",option1="",article1="",imgUrl1="";
+
     StorageReference sReference;
     private ImageButton mselectImage;
 
@@ -58,7 +64,9 @@ public class DiaLog_Add extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_layout);
-       option= (Spinner) findViewById(R.id.option);
+
+        option= (Spinner) findViewById(R.id.option);
+
 
         try {
             title = (EditText) findViewById(R.id.title1);
@@ -71,7 +79,9 @@ public class DiaLog_Add extends AppCompatActivity {
         add= (Button) findViewById(R.id.addButton);
 
         final String[] opt = this.getResources().getStringArray(R.array.option);
-        mselectImage = (ImageButton) findViewById(R.id.selectImage);
+        mselectImage = (ImageButton)findViewById(R.id.selectImage);
+        close = (TextView)findViewById(R.id.closePopup);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (DiaLog_Add.this, android.R.layout.simple_dropdown_item_1line, opt);
         option.setAdapter(adapter);
@@ -79,30 +89,26 @@ public class DiaLog_Add extends AppCompatActivity {
         Timestamp= ExtractDateTime.getDate();
         bundle= getIntent().getExtras();
         if(bundle!=null) {
-          //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
-           message= bundle.getStringArray("message");
+            //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
+            message= bundle.getStringArray("message");
             option.setSelection(getIndex(option, message[1]));
-
+            mImage = Uri.parse(message[3].toString());
             article.setText(message[2]);
             title.setText(message[0]);
             try {
                 Picasso.with(DiaLog_Add.this).load(message[3]).resize(200, Display.DEFAULT_DISPLAY).into(mselectImage);
-
-            }catch (Exception e)
-            {
+            }catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
 
 
-        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile")/*.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+"")*/;
-        // firebaseDatabase1 = FirebaseDatabase.getInstance().getReference().child("PrivateFile").child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]+Timestamp);
 
-
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile");
         sReference = FirebaseStorage.getInstance().getReference();
 
-      add.setOnClickListener(new View.OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)      {
                 //  String[] bodyParts={retrieve1.title,retrieve1.option,retrieve1.article,retrieve1.imgUrl};
@@ -113,12 +119,11 @@ public class DiaLog_Add extends AppCompatActivity {
                     progressDialog.setTitle("uploading..");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-
-
                     if(mImage!=null) {
                         if(bundle!=null) {
+                            String uids = message[4];
                             DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                            database.child("UserFile").child(message[4]).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            database.child("UserFile").child(uids).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     UploadNewFile(progressDialog);
@@ -135,8 +140,6 @@ public class DiaLog_Add extends AppCompatActivity {
                     Toast.makeText(DiaLog_Add.this, "Please Input Valid Information..", Toast.LENGTH_SHORT).show();
                 }
             }
-
-
         });
         mselectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,8 +154,8 @@ public class DiaLog_Add extends AppCompatActivity {
     }
 
     private void UploadNewFile(final ProgressDialog progressDialog) {
-        {
-            if(mImage!=null) {
+        if(bundle==null) {
+            if (mImage != null) {
 
                 StorageReference filePath = sReference.child("userimg").child(mImage.getLastPathSegment());
                 filePath.putFile(mImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -162,17 +165,17 @@ public class DiaLog_Add extends AppCompatActivity {
                         DatabaseReference newPost = firebaseDatabase.push();
                         //  DatabaseReference newPost1 = firebaseDatabase1;
                         addChild(newPost, progressDialog, downloadUri.toString());
-                        Map<String, String> map = new HashMap<String, String>();
-                        map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                        map.put("option", option.getSelectedItem().toString());
-                        map.put("title", title.getText().toString());
-                        map.put("article", article.getText().toString());
-                        map.put("imgUrl", downloadUri.toString());
-                        map.put("Date", Timestamp);
-                        //  newPost1.push().setValue(map);
-/*
-                            startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
-                            finish();*/
+//                        Map<String, String> map = new HashMap<String, String>();
+//                        map.put("name", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+//                        map.put("option", option.getSelectedItem().toString());
+//                        map.put("title", title.getText().toString());
+//                        map.put("article", article.getText().toString());
+//                        map.put("imgUrl", downloadUri.toString());
+//                        map.put("Date", Timestamp);
+//                        //  newPost1.push().setValue(map);
+///*
+//                            startActivity(new Intent(DiaLog_Add.this, MainActivity.class));
+//                            finish();*/
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -181,17 +184,13 @@ public class DiaLog_Add extends AppCompatActivity {
 
                     }
                 });
-            }
-            else
-            {
-                addChild(firebaseDatabase.push(), progressDialog,"");
+            } else {
+                addChild(firebaseDatabase.push(), progressDialog, "");
 
             }
+        }else {
+            addChild(firebaseDatabase.push(), progressDialog, mImage.toString());
         }
-    }
-
-    private void deletePreViousBranch() {
-
     }
 
     private int getIndex(Spinner option, String s) {
@@ -227,6 +226,8 @@ public class DiaLog_Add extends AppCompatActivity {
         newPost.child("Date").setValue(Timestamp);
         progressDialog.dismiss();
 
+        //MainActivity.activity.onStart();
+
         Toast.makeText(getApplicationContext(),"Successfully update!!!",Toast.LENGTH_SHORT).show();
         finish();
     }
@@ -255,9 +256,21 @@ public class DiaLog_Add extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DiaLog_Add.this,UserProfileActivity.class));
+                finish();
+            }
+        });
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Toast.makeText(getApplicationContext(),"",Toast.LENGTH_SHORT).show();
+
     }
 }

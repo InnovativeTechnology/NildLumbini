@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,6 +34,7 @@ public class UserProfileActivity extends AppCompatActivity {
     RecyclerView userProfileRecycler;
     FirebaseAuth mauth;
     Toolbar toolbar;
+
     //AlertDialogManage alt;
 
     static  String option = "";
@@ -48,7 +52,7 @@ public class UserProfileActivity extends AppCompatActivity {
         getSupportActionBar();
         mauth= FirebaseAuth.getInstance();
         option = mauth.getCurrentUser().getEmail().toString();
-        userProfileAddButton = (Button) findViewById(R.id.user_profile_add_button);
+        //userProfileAddButton = (Button) findViewById(R.id.user_profile_add_button);
         userProfileRecycler = (RecyclerView) findViewById(R.id.user_profile_recycler);
         deletePost = (ImageView)findViewById(R.id.dlt);
 
@@ -59,25 +63,34 @@ public class UserProfileActivity extends AppCompatActivity {
         GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
         g.loadDataA();
         g.setDataA();
-
-
-
-
-        userProfileAddButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-           startActivity(new Intent(UserProfileActivity.this, DiaLog_Add.class));
+            public void onClick(View view) {
+                startActivity(new Intent(UserProfileActivity.this, DiaLog_Add.class));
             }
         });
+
+    }
+
+    public static void onPressStart(){
 
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
-        g.loadDataA();
-        g.setDataA();
+
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                GetDataForFragments g =  new GetDataForFragments(UserProfileActivity.this, option, userProfileRecycler, "e");
+                g.loadDataA();
+                g.setDataA();
+            }
+        },5000);
+
     }
 
 
@@ -90,10 +103,14 @@ public class UserProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       int id = item.getItemId();
+        int id = item.getItemId();
         if (id == R.id.user_logout) {
             AlertDialogManage();
-         //   alt.AlertManage();
+            //   alt.AlertManage();
+
+        }
+        else if(id == R.id.user_additm){
+            startActivity(new Intent(UserProfileActivity.this, DiaLog_Add.class));
 
         }
         return true;

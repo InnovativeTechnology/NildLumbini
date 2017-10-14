@@ -15,6 +15,7 @@
     <color name="colorSecondaryText">#cccccc</color>
     <color name="colorIcons">#01b822</color>
     <color name="close">#fc0707</color>
+    <color name="thecolor">#faf8f8</color>
 
 
 </resources>

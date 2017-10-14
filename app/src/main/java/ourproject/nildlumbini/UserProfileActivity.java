@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,6 +74,12 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
     }
+ /*   Drawable drawable = toolbar.getOverflowIcon();
+    if(drawable != null) {
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable.mutate(), getResources().getColor(R.color.thecolor));
+        toolbar.setOverflowIcon(drawable);
+    }*/
 
     public static void onPressStart(){
 

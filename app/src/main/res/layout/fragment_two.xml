@@ -7,11 +7,10 @@
     android:background="#1567ed">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView_fragment2"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </android.support.v7.widget.RecyclerView>
 
 

@@ -67,6 +67,7 @@ public class DiaLog_Add extends AppCompatActivity {
 
         option= (Spinner) findViewById(R.id.option);
 
+
         try {
             title = (EditText) findViewById(R.id.title1);
         }
@@ -103,8 +104,10 @@ public class DiaLog_Add extends AppCompatActivity {
         }
 
 
+
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UserFile");
         sReference = FirebaseStorage.getInstance().getReference();
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)      {
@@ -129,7 +132,6 @@ public class DiaLog_Add extends AppCompatActivity {
                         }
                         else
                             UploadNewFile(progressDialog);
-
 
                     } else {
                         addChild(firebaseDatabase.push(), progressDialog, "");

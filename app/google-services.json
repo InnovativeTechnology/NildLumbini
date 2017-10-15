@@ -1,9 +1,9 @@
 {
   "project_info": {
-    "project_number": "506875139617",
-    "firebase_url": "https://nildlumbini.firebaseio.com",
-    "project_id": "nildlumbini",
-    "storage_bucket": "nildlumbini.appspot.com"
+    "project_number": "your project no.",
+    "firebase_url": "your project urls",
+    "project_id": "your project id",
+    "storage_bucket": "your storage bucket"
   },
   "client": [
     {
